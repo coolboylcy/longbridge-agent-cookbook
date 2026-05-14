@@ -20,3 +20,6 @@ supabase/.temp
 # misc
 .DS_Store
 *.log
+
+# Supabase local state
+.supabase/
