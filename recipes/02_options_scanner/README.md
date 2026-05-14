@@ -1,3 +1,5 @@
+> 🌐 **Language / 语言 / 語言:** English · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
+
 # Recipe 02: Options Scanner — High-IV-Rank Covered Calls
 
 > An **AI agent options scanner** that ranks the cleanest covered-call candidates across your Longbridge watchlist.

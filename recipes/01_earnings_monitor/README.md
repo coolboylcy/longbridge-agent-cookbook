@@ -1,3 +1,5 @@
+> 🌐 **Language / 语言 / 語言:** English · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
+
 # Recipe 01: Earnings Monitor
 
 > An agent that watches your Longbridge watchlist for upcoming earnings and emits a 24h pre-brief plus a 1h post-recap.

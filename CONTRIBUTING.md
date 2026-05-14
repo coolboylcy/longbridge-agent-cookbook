@@ -1,3 +1,5 @@
+> 🌐 **Language / 语言 / 語言:** English · [简体中文](CONTRIBUTING.zh-CN.md) · [繁體中文](CONTRIBUTING.zh-TW.md)
+
 # Contributing
 
 Thanks for thinking about contributing. This repo stays useful only if every recipe is small, runnable, and honest — and **MCP-first**. Read this before opening a PR.

@@ -1,3 +1,5 @@
+> 🌐 **Language / 语言 / 語言:** English · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
+
 # Recipe 03: Weekly Portfolio Review
 
 > An agent that ingests your paper-trading positions and writes a weekly review — 3 observations, 3 questions for next week.

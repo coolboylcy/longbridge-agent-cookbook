@@ -1,3 +1,5 @@
+> 🌐 **Language / 语言 / 語言:** English · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
+
 # Recipe NN: [TODO recipe name]
 
 > [TODO one-line tagline — what does this agent do, in one sentence?]

@@ -1,3 +1,5 @@
+> 🌐 **Language / 语言 / 語言:** English · [简体中文](MCP_SETUP.zh-CN.md) · [繁體中文](MCP_SETUP.zh-TW.md)
+
 # MCP Setup — Longbridge MCP
 
 One-page reference for installing the **Longbridge MCP** server into any MCP-compatible agent. Pick your client below and paste the matching snippet.
