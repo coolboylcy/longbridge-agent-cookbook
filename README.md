@@ -1,3 +1,5 @@
+> 🌐 **Language / 语言 / 語言:** English · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
+
 # longbridge-agent-cookbook
 
 > Runnable AI agent recipes for **Longbridge Skill / MCP**. Drop into Claude Code, Cursor, or Codex and your agent gets broker hands.
