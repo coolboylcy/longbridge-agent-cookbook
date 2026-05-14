@@ -1,4 +1,7 @@
-import { PageHeader, Badge, PromptCard, WalkthroughStep } from "@cookbook/ui";
+import { PageHeader } from "../components/ui/page-header";
+import { Badge } from "../components/ui/badge";
+import { PromptCard } from "../components/ui/prompt-card";
+import { WalkthroughStep } from "../components/ui/walkthrough-step";
 
 const REVIEW_PROMPT = `Using the Longbridge MCP, write my weekly portfolio review:
 
