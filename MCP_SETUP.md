@@ -43,17 +43,15 @@ Restart Claude Desktop. The Longbridge tools will appear in the tool picker.
 
 ## Cursor
 
-Open **Settings → Features → Model Context Protocol** and add a server, or edit `~/.cursor/mcp.json`:
+Open **Settings → MCP** and add a server, or edit `~/.cursor/mcp.json`:
 
 ```json
 {
-  "mcp": {
-    "servers": {
-      "longbridge": {
-        "url": "https://mcp.longbridgeapp.com/sse",
-        "headers": {
-          "Authorization": "Bearer <your-longbridge-paper-token>"
-        }
+  "mcpServers": {
+    "longbridge": {
+      "url": "https://mcp.longbridgeapp.com/sse",
+      "headers": {
+        "Authorization": "Bearer <your-longbridge-paper-token>"
       }
     }
   }

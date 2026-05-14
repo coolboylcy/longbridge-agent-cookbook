@@ -58,16 +58,14 @@ Pick your client and paste the matching snippet. Full reference: [`MCP_SETUP.md`
 }
 ```
 
-**Cursor** — Settings → MCP → add server:
+**Cursor** — Settings → MCP → add server, or edit `~/.cursor/mcp.json`:
 
 ```json
 {
-  "mcp": {
-    "servers": {
-      "longbridge": {
-        "url": "https://mcp.longbridgeapp.com/sse",
-        "headers": { "Authorization": "Bearer <your-longbridge-paper-token>" }
-      }
+  "mcpServers": {
+    "longbridge": {
+      "url": "https://mcp.longbridgeapp.com/sse",
+      "headers": { "Authorization": "Bearer <your-longbridge-paper-token>" }
     }
   }
 }
@@ -106,7 +104,7 @@ Want a deeper, opinionated prompt with screenshots and tool-call walkthroughs? S
 | 02  | [Options Scanner](recipes/02_options_scanner)   | **AI agent options scanner** for high-IV-rank covered calls on your watchlist.      | scaffolded  |
 | 03  | [Portfolio Review](recipes/03_portfolio_review) | Agent ingests your paper positions; writes a weekly review with 3 observations + 3 Qs. | scaffolded  |
 
-More coming. Have a recipe idea? [Open an issue](../../issues/new) or read [CONTRIBUTING.md](CONTRIBUTING.md).
+More coming. Have a recipe idea? [Open an issue](https://github.com/coolboylcy/longbridge-agent-cookbook/issues/new) or read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
@@ -147,7 +145,7 @@ The agent (Claude / Cursor / Codex) drives. MCP is the bus. The Longbridge Skill
 
 **Primary path (recommended):** agent → MCP → Skill. This is what every recipe README opens with.
 
-**Fallback path (headless):** `recipe/NN/main.py` calls the Longbridge Python SDK directly. Use this when you need the recipe to run on a cron, in CI, or anywhere a chat agent isn't available. Same outputs, different driver.
+**Fallback path (headless):** `recipes/NN/main.py` calls the Longbridge Python SDK directly. Use this when you need the recipe to run on a cron, in CI, or anywhere a chat agent isn't available. Same outputs, different driver.
 
 ---
 
