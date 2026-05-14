@@ -17,7 +17,7 @@ export class LongbridgeClient {
 
     this.token = config.token;
     this.tradingMode = mode;
-    this.baseUrl = config.baseUrl ?? "https://openapi.longbridgeapp.com";
+    this.baseUrl = config.baseUrl ?? "https://openapi.longbridge.com";
   }
 
   private async fetch<T>(path: string): Promise<T> {

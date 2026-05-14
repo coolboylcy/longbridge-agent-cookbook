@@ -2,18 +2,20 @@
 
 One-page reference for installing the **Longbridge MCP** server into any MCP-compatible agent. Pick your client below and paste the matching snippet.
 
-> Use a **paper-trading token** for everything in this cookbook. Get one from [open.longbridgeapp.com](https://open.longbridgeapp.com) → Developer Center → **MCP Tokens** → Issue paper token. Never embed a real-money token in a config file.
+> Authentication uses **OAuth 2.1** — no API token to manage in config files. On first tool call, a browser window opens for Longbridge login. Sign up or log in at [open.longbridge.com](https://open.longbridge.com). Paper-trading accounts use the same flow.
 
 ---
 
 ## Server endpoint
 
-| Field        | Value                                  |
-| ------------ | -------------------------------------- |
-| Server name  | `longbridge`                           |
-| Transport    | SSE (Server-Sent Events)               |
-| URL          | `https://mcp.longbridgeapp.com/sse`    |
-| Auth         | `Authorization: Bearer <token>` header |
+| Field        | Value                                    |
+| ------------ | ---------------------------------------- |
+| Server name  | `longbridge`                             |
+| Transport    | Streamable HTTP                          |
+| URL          | `https://openapi.longbridge.com/mcp`     |
+| Auth         | OAuth 2.1 (browser flow, auto-discovery) |
+
+> **Note:** The legacy SSE endpoint (`https://mcp.longbridgeapp.com/sse`) is deprecated. Use the HTTP endpoint above.
 
 ---
 
@@ -28,37 +30,37 @@ Edit your `claude_desktop_config.json`:
 {
   "mcpServers": {
     "longbridge": {
-      "url": "https://mcp.longbridgeapp.com/sse",
-      "headers": {
-        "Authorization": "Bearer <your-longbridge-paper-token>"
-      }
+      "url": "https://openapi.longbridge.com/mcp"
     }
   }
 }
 ```
 
-Restart Claude Desktop. The Longbridge tools will appear in the tool picker.
+Restart Claude Desktop. On the first tool invocation, a browser window opens for OAuth login.
 
 ---
 
 ## Cursor
 
-Open **Settings → MCP** and add a server, or edit `~/.cursor/mcp.json`:
+Open **Settings → MCP** and click **Add Remote MCP Server**, then paste:
+
+```
+https://openapi.longbridge.com/mcp
+```
+
+Or edit `~/.cursor/mcp.json` directly:
 
 ```json
 {
   "mcpServers": {
     "longbridge": {
-      "url": "https://mcp.longbridgeapp.com/sse",
-      "headers": {
-        "Authorization": "Bearer <your-longbridge-paper-token>"
-      }
+      "url": "https://openapi.longbridge.com/mcp"
     }
   }
 }
 ```
 
-Reload the window. Verify by typing `@longbridge` in chat — the server's tools should autocomplete.
+Reload the window. On first use the OAuth flow opens automatically.
 
 ---
 
@@ -67,62 +69,69 @@ Reload the window. Verify by typing `@longbridge` in chat — the server's tools
 One-line install from your terminal:
 
 ```bash
-claude mcp add longbridge https://mcp.longbridgeapp.com/sse \
-  --header "Authorization: Bearer <your-longbridge-paper-token>"
+claude mcp add --transport http longbridge https://openapi.longbridge.com/mcp
 ```
 
-Or edit the generated config at `~/.config/claude/mcp.json` directly using the same JSON shape as Claude Desktop.
+Then authenticate:
 
-Verify:
+```bash
+# Inside a Claude Code session
+/mcp
+# Select "longbridge" → Authenticate
+```
+
+Or verify the server is registered:
 
 ```bash
 claude mcp list
-# longbridge   https://mcp.longbridgeapp.com/sse   connected
+# longbridge   https://openapi.longbridge.com/mcp   connected
 ```
 
 ---
 
 ## Codex
 
-In your Codex MCP config (typically `~/.codex/config.toml` or the equivalent JSON):
+Open **Settings → MCP Servers → Add Server**. Set:
+
+- **Name**: `longbridge`
+- **Type**: Streamable HTTP
+- **URL**: `https://openapi.longbridge.com/mcp`
+
+Click **Authenticate** when prompted.
+
+---
+
+## Zed
+
+Add to your `settings.json`:
 
 ```json
 {
-  "mcp_servers": {
+  "context_servers": {
     "longbridge": {
-      "transport": "sse",
-      "url": "https://mcp.longbridgeapp.com/sse",
-      "headers": {
-        "Authorization": "Bearer <your-longbridge-paper-token>"
-      }
+      "url": "https://openapi.longbridge.com/mcp"
     }
   }
 }
 ```
 
-Restart Codex.
-
 ---
 
 ## Generic MCP client
 
-For any other client that speaks MCP, use this canonical shape:
+For any other client that speaks Streamable HTTP MCP:
 
 ```json
 {
   "name": "longbridge",
   "transport": {
-    "type": "sse",
-    "url": "https://mcp.longbridgeapp.com/sse"
-  },
-  "auth": {
-    "type": "bearer",
-    "token": "<your-longbridge-paper-token>"
+    "type": "streamable-http",
+    "url": "https://openapi.longbridge.com/mcp"
   }
 }
 ```
 
-If your client supports stdio MCP only, run the Longbridge MCP locally via the official `longbridge-mcp` package (see [longbridge-mcp docs](https://open.longbridgeapp.com/docs/mcp)).
+OAuth auto-discovery is implemented via RFC 9728 — compliant clients handle authentication automatically.
 
 ---
 
@@ -141,16 +150,16 @@ You should see a tool catalog including (non-exhaustive):
 - `options.chain` / `options.chain_expiries`
 - `order.submit_paper` — paper-trade order entry
 
-If the call fails with `401 Unauthorized`, your token is missing or malformed. If `403 Forbidden`, the token exists but lacks scope — re-issue it from the Developer Center with the scopes you need.
+If you see `401 Unauthorized`, run `/mcp` → `longbridge` → **Authenticate** again. If `403 Forbidden`, the OAuth scope granted doesn't cover the tool — re-authenticate and approve the required scopes.
 
 ---
 
-## Token hygiene
+## Credential hygiene
 
-- **One token per environment.** Don't share a paper token across machines you don't trust.
-- **Rotate every 90 days.** The Developer Center will warn you before expiry.
-- **Never commit tokens.** The `.env` file in this repo is gitignored; MCP client config files usually are not — keep secrets out of them or use the client's secret store where available.
-- **Paper ≠ live.** Paper tokens cannot place real-money orders even if you try. That's the safety net — keep it.
+- **No tokens in config files.** OAuth credentials are stored client-side by the MCP client, not in config files you commit.
+- **Revoke access anytime** from your Longbridge account security settings at [open.longbridge.com](https://open.longbridge.com).
+- **Paper ≠ live.** Paper-trading accounts are sandbox accounts — they cannot place real-money orders.
+- **Python SDK fallback** (for headless `main.py` scripts) still uses `LONGBRIDGE_APP_KEY` / `LONGBRIDGE_APP_SECRET` / `LONGBRIDGE_ACCESS_TOKEN` from the developer portal — that credential path is separate from MCP OAuth.
 
 ---
 

@@ -49,23 +49,27 @@ Pick your client and paste the matching snippet. Full reference: [`MCP_SETUP.md`
 {
   "mcpServers": {
     "longbridge": {
-      "url": "https://mcp.longbridgeapp.com/sse",
-      "headers": {
-        "Authorization": "Bearer <your-longbridge-paper-token>"
-      }
+      "url": "https://openapi.longbridge.com/mcp"
     }
   }
 }
 ```
 
-**Cursor** — Settings → MCP → add server, or edit `~/.cursor/mcp.json`:
+Restart Claude Desktop. On first tool call, a browser window opens for OAuth login.
+
+**Cursor** — Settings → MCP → Add Remote MCP Server, paste the URL:
+
+```
+https://openapi.longbridge.com/mcp
+```
+
+Or edit `~/.cursor/mcp.json` directly:
 
 ```json
 {
   "mcpServers": {
     "longbridge": {
-      "url": "https://mcp.longbridgeapp.com/sse",
-      "headers": { "Authorization": "Bearer <your-longbridge-paper-token>" }
+      "url": "https://openapi.longbridge.com/mcp"
     }
   }
 }
@@ -74,11 +78,12 @@ Pick your client and paste the matching snippet. Full reference: [`MCP_SETUP.md`
 **Claude Code** — one-liner:
 
 ```bash
-claude mcp add longbridge https://mcp.longbridgeapp.com/sse \
-  --header "Authorization: Bearer <your-longbridge-paper-token>"
+claude mcp add --transport http longbridge https://openapi.longbridge.com/mcp
 ```
 
-Get your paper-trading token from [open.longbridgeapp.com](https://open.longbridgeapp.com) → Developer Center → MCP Tokens.
+Then run `/mcp` inside Claude Code, select `longbridge`, and choose **Authenticate** to complete the OAuth flow.
+
+Sign up or log in at [open.longbridge.com](https://open.longbridge.com). Paper-trading accounts work with the same OAuth flow — no separate token needed.
 
 ### Step 2 — Open your agent and paste a recipe prompt
 
@@ -189,7 +194,7 @@ Longbridge ships 7 SDKs (Python, Go, Rust, Node, C#, Java, C++). Python is the l
 Technically yes, but the repo is deliberately hostile to that path. If you do, you own every order that fires.
 
 **Q: How do I get a Longbridge account?**
-HK / SG residents: [longbridge.com](https://longbridge.com). For paper trading, the Developer Center auto-provisions a sandbox once you've registered, and issues both an MCP token and SDK app_key / app_secret.
+HK / SG residents: [longbridge.com](https://longbridge.com). For paper trading, sign up and visit [open.longbridge.com](https://open.longbridge.com) — the developer portal auto-provisions a sandbox. MCP uses OAuth 2.1 (no token to copy). The Python SDK fallback still uses `app_key` / `app_secret` / `access_token` from the developer portal.
 
 ---
 
