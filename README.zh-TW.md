@@ -35,69 +35,78 @@
 
 ---
 
-## 5 分鐘快速上手（MCP 優先）
+## 5 分鐘快速上手
 
-MCP 的核心價值在於你無需克隆任何東西就能開始。標準流程如下：
+安裝是**兩步流程** — 與 [Longbridge 官方指南](https://open.longbridge.com/skill/install.md) 一致：
 
-### 第一步 — 將 Longbridge MCP 安裝到你的 Agent
+1. **連接** AI 工具到 Longbridge 平台 — CLI（推薦）或 MCP 二選一
+2. **安裝 Skill** — 一組指令檔案，告訴 AI Longbridge 能做什麼
 
-選擇你的客戶端，貼上對應的設定片段。完整參考：[`MCP_SETUP.md`](MCP_SETUP.md)。
+兩步的完整參考：[`MCP_SETUP.md`](MCP_SETUP.zh-TW.md)。
 
-**Claude Desktop** — 編輯 `claude_desktop_config.json`：
+### 第一步 — 連接
 
-```json
-{
-  "mcpServers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
-```
-
-重啟 Claude Desktop，首次呼叫工具時瀏覽器會自動開啟 OAuth 登入頁面。
-
-**Cursor** — 設定 → MCP → 新增 Remote MCP Server，貼上 URL：
-
-```
-https://openapi.longbridge.com/mcp
-```
-
-或直接編輯 `~/.cursor/mcp.json`：
-
-```json
-{
-  "mcpServers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
-```
-
-**Claude Code** — 一行指令：
+**方法 A — CLI（推薦）。** 支援 Claude Code、Codex（Work locally）、opencode、OpenClaw、Warp、Gemini CLI。
 
 ```bash
-claude mcp add --transport http longbridge https://openapi.longbridge.com/mcp
+# macOS
+brew install --cask longbridge/tap/longbridge-terminal
+
+# macOS / Linux（無 Homebrew）
+curl -sSL https://open.longbridge.com/longbridge/longbridge-terminal/install | sh
+
+# Windows (PowerShell)
+iwr https://open.longbridge.com/longbridge/longbridge-terminal/install.ps1 | iex
 ```
 
-然後在 Claude Code 中執行 `/mcp`，選擇 `longbridge`，點擊 **Authenticate** 完成 OAuth 授權。
+然後授權：
 
-在 [open.longbridge.com](https://open.longbridge.com) 註冊或登入。模擬交易帳戶同樣使用 OAuth 流程，無需單獨申請 Token。
+```bash
+longbridge auth login
+```
 
-### 第二步 — 開啟 Agent，貼上食譜 Prompt
+**方法 B — MCP。** 支援 Claude Desktop、Cursor、Zed、Gemini CLI、Warp。在客戶端的 MCP 設定加：
 
-開啟 Claude Desktop（或 Cursor / Codex），貼上示例 Prompt：
+```json
+{
+  "mcpServers": {
+    "longbridge": {
+      "url": "https://openapi.longbridge.com/mcp"
+    }
+  }
+}
+```
 
-> 使用 Longbridge MCP，查看我的自選股。對於未來 24 小時內有財報的每檔股票，取得上季度業績、市場共識預期和近周選擇權隱含波動幅度。每檔股票輸出一份簡潔的 Markdown 摘要。
+> 中國大陸使用者使用加速端點：`https://openapi.longbridge.cn/mcp`
 
-### 第三步 — 觀看 Agent 執行
+首次呼叫工具時瀏覽器自動打開 OAuth 登入。模擬交易帳戶走同一流程。在 [open.longbridge.com](https://open.longbridge.com) 註冊或登入。
 
-Agent 將依序呼叫 Longbridge MCP 工具（`watchlist.list`、`calendar.events`、`fundamentals.quarterly`、`options.chain`……）並生成 Markdown 摘要。整個循環就是這麼簡單。
+### 第二步 — 安裝 Skill
 
-> 無需 Python，無需克隆，無需 SDK 設定。這就是 MCP 優先。
+Skill 是一組指令檔案，告訴 AI Longbridge 能做什麼。**沒裝 Skill 的話，AI 可能完成第一步後仍然不知道用 Longbridge。**
 
-想要附帶截圖和工具呼叫示範的深度 Prompt？請查看下方[食譜](#食譜)。
+```bash
+# Claude Code 外掛（推薦）
+/plugin marketplace add longbridge/skills
+/plugin install longbridge@longbridge-skills
+
+# 或 npx / bunx（任何工具）
+npx skills add longbridge/skills -g
+```
+
+也可以下載 <https://open.longbridge.com/skill/longbridge-all.zip>，放進 AI 工具的 Skill 目錄。
+
+### 第三步 — 試一個食譜 Prompt
+
+開啟任意 [食譜](#食譜) 頁面，複製 Prompt 貼到 Claude（或點 **Open in Claude**）。Agent 會呼叫 Longbridge 工具並生成 Markdown 報告。整個循環就這麼簡單。
+
+> 不用 Python。不用 clone。不用設 SDK。
+
+### 已知限制
+
+- **Claude Desktop：** Chat / Cowork 模式會阻擋 CLI 安裝和 MCP 連線。切到 **Code** 標籤（內嵌 Claude Code）才有完整終端權限。
+- **Codex：** Cloud 模式有同樣的限制。新建對話時選 **Work locally**。
+- **Claude.ai / ChatGPT 網頁版：** 純瀏覽器介面無法執行 shell 指令、也無法連線 MCP。請用本地客戶端。
 
 ---
 
@@ -105,9 +114,9 @@ Agent 將依序呼叫 Longbridge MCP 工具（`watchlist.list`、`calendar.event
 
 | #   | 食譜                                              | 功能說明                                                                          | 狀態        |
 | --- | ------------------------------------------------- | --------------------------------------------------------------------------------- | ----------- |
-| 01  | [財報監控](recipes/01_earnings_monitor)           | Agent 監控自選股即將到來的財報；提前 24 小時預報 + 財報後 1 小時複盤。            | 已建置      |
-| 02  | [選擇權掃描器](recipes/02_options_scanner)        | **AI Agent 選擇權掃描器**，篩選自選股中 IV Rank 較高的備兌買權機會。              | 已建置      |
-| 03  | [投資組合回顧](recipes/03_portfolio_review)       | Agent 讀取模擬持倉，生成含 3 個核心觀察點和 3 個跟進問題的週度複盤報告。          | 已建置      |
+| 01  | [財報監控](recipes/01_earnings_monitor)           | Agent 監控自選股即將到來的財報；提前 24 小時預報 + 財報後 1 小時複盤。            | [上線](https://earnings-monitor-ochre.vercel.app)  |
+| 02  | [選擇權掃描器](recipes/02_options_scanner)        | **AI Agent 選擇權掃描器**，篩選自選股中 IV Rank 較高的備兌買權機會。              | [上線](https://options-scanner-three.vercel.app)   |
+| 03  | [投資組合回顧](recipes/03_portfolio_review)       | Agent 讀取模擬持倉，生成含 3 個核心觀察點和 3 個跟進問題的週度複盤報告。          | [上線](https://portfolio-review-three.vercel.app)  |
 
 更多食譜持續更新中。有想法？[提 Issue](https://github.com/coolboylcy/longbridge-agent-cookbook/issues/new) 或閱讀 [CONTRIBUTING.md](CONTRIBUTING.md)。
 

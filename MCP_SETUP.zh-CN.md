@@ -1,32 +1,76 @@
 > 🌐 **Language / 语言 / 語言:** [English](MCP_SETUP.md) · 简体中文 · [繁體中文](MCP_SETUP.zh-TW.md)
 
-# MCP 配置指南 — Longbridge MCP
+# 安装指南 — 把 Longbridge 接到你的 AI 助手
 
-将 **Longbridge MCP** 服务器安装到任意兼容 MCP 的 Agent 的单页参考文档。选择你使用的客户端，复制对应配置片段即可。
+这是简化的食谱版。**官方权威指南**在 <https://open.longbridge.com/skill/install.md> — 如有不一致以官方为准。
 
-> 认证采用 **OAuth 2.1** — 无需在配置文件中管理 API Token。首次调用工具时，浏览器会自动弹出 Longbridge 登录页面。请在 [open.longbridge.com](https://open.longbridge.com) 注册或登录。模拟交易账户使用相同的登录流程。
+安装是**两步流程**：
 
----
+1. **连接** AI 工具到 Longbridge 平台 — CLI（推荐）或 MCP 二选一
+2. **安装 Skill** — 一组指令文件，告诉 AI Longbridge 能做什么
 
-## 服务器端点
-
-| 字段       | 值                                        |
-| ---------- | ----------------------------------------- |
-| 服务器名称 | `longbridge`                              |
-| 传输协议   | Streamable HTTP                           |
-| URL        | `https://openapi.longbridge.com/mcp`      |
-| 认证方式   | OAuth 2.1（浏览器流程，自动发现）         |
-
-> **注意：** 旧版 SSE 端点（`https://mcp.longbridgeapp.com/sse`）已废弃，请使用上方的 HTTP 端点。
+少做哪一步，AI 都没法操盘。
 
 ---
 
-## Claude Desktop
+## 第一步 — 连接到 Longbridge 平台
 
-编辑你的 `claude_desktop_config.json`：
+下面两种方法选**一种**。
 
-- macOS：`~/Library/Application Support/Claude/claude_desktop_config.json`
-- Windows：`%APPDATA%\Claude\claude_desktop_config.json`
+| 路径                  | 适合谁                                                                | 需要本地安装？ |
+| --------------------- | --------------------------------------------------------------------- | -------------- |
+| **A. CLI**（推荐） | Claude Code、Codex（Work locally）、opencode、OpenClaw、Warp、Gemini CLI | 是             |
+| **B. MCP**            | Claude Desktop、Cursor、Zed、Gemini CLI、Warp                         | 否             |
+
+### 方法 A — CLI（推荐）
+
+安装 `longbridge` 终端程序，AI 通过 shell 命令调用它。
+
+**macOS — Homebrew：**
+
+```bash
+brew install --cask longbridge/tap/longbridge-terminal
+```
+
+**macOS / Linux — curl：**
+
+```bash
+curl -sSL https://open.longbridge.com/longbridge/longbridge-terminal/install | sh
+```
+
+**Windows — Scoop：**
+
+```powershell
+scoop install https://open.longbridge.com/longbridge/longbridge-terminal/longbridge.json
+```
+
+**Windows — PowerShell：**
+
+```powershell
+iwr https://open.longbridge.com/longbridge/longbridge-terminal/install.ps1 | iex
+```
+
+**授权登录：**
+
+```bash
+longbridge auth login
+```
+
+浏览器会自动打开 OAuth 登录页。模拟交易账户走同一流程。
+
+**Claude Code 用户 — 一次性允许 `longbridge` 命令**，避免每次问权限。在项目根目录的 `.claude/settings.json` 加：
+
+```json
+{
+  "permissions": {
+    "allow": ["Bash(longbridge *)"]
+  }
+}
+```
+
+### 方法 B — MCP
+
+在 AI 工具的配置里加上 Longbridge 远程 MCP 服务器：
 
 ```json
 {
@@ -38,133 +82,117 @@
 }
 ```
 
-重启 Claude Desktop。首次调用工具时，浏览器会自动打开 OAuth 登录页面。
+> **中国大陆用户**可使用加速端点：`https://openapi.longbridge.cn/mcp`
+
+| 客户端         | 在哪里配置                                                                                                                                |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Claude Desktop | 编辑 `~/Library/Application Support/Claude/claude_desktop_config.json`（macOS）或 `%APPDATA%\Claude\claude_desktop_config.json`（Windows） |
+| Cursor         | Settings → MCP Servers → Add Remote MCP Server                                                                                            |
+| Zed            | `~/.config/zed/settings.json` 中的 `context_servers` 键                                                                                   |
+| Gemini CLI     | `~/.gemini/settings.json` 中的 `mcpServers` 键                                                                                            |
+| Warp           | Settings → AI → MCP Servers → Add                                                                                                         |
+
+第一次提到 Longbridge 时，客户端会自动打开浏览器 OAuth 授权 — 不需要在配置文件里放 API key。
 
 ---
 
-## Cursor
+## 第二步 — 安装 Skill
 
-打开 **Settings → MCP**，点击 **Add Remote MCP Server**，然后粘贴：
+Skill 是一组指令文件，告诉 AI 助手 Longbridge 能做什么、怎么调用。**没装 Skill 的话，AI 可能完成第一步后仍然不知道用 Longbridge。**
+
+**Claude Code 插件（Claude Code 用户推荐）：**
+
+在 Claude Code 会话里执行：
 
 ```
-https://openapi.longbridge.com/mcp
+/plugin marketplace add longbridge/skills
+/plugin install longbridge@longbridge-skills
 ```
 
-或直接编辑 `~/.cursor/mcp.json`：
+通过 Claude Code 插件系统自动更新。
 
-```json
-{
-  "mcpServers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
-```
-
-重新加载窗口。首次使用时 OAuth 流程会自动启动。
-
----
-
-## Claude Code
-
-在终端执行一行命令完成安装：
+**npx / bunx（任何工具）：**
 
 ```bash
-claude mcp add --transport http longbridge https://openapi.longbridge.com/mcp
+# Node
+npx skills add longbridge/skills -g
+# Bun
+bunx skills add longbridge/skills -g
 ```
 
-然后进行认证：
+需要 [Node.js](https://nodejs.org) 或 [Bun](https://bun.sh)。
 
-```bash
-# 在 Claude Code 会话中执行
-/mcp
-# 选择 "longbridge" → Authenticate
+**ZIP 下载（手动）：**
+
+下载 <https://open.longbridge.com/skill/longbridge-all.zip>，解压，放到 AI 工具的 Skill 目录：
+
+- Claude Code：`.claude/skills/`
+- Cursor：粘贴到 Rules 编辑器
+- 其他：见 ZIP 内的 README
+
+**OpenClaw** — 直接在聊天里发，自动安装：
+
 ```
-
-或验证服务器是否已注册：
-
-```bash
-claude mcp list
-# longbridge   https://openapi.longbridge.com/mcp   connected
-```
-
----
-
-## Codex
-
-打开 **Settings → MCP Servers → Add Server**，填写：
-
-- **Name**：`longbridge`
-- **Type**：Streamable HTTP
-- **URL**：`https://openapi.longbridge.com/mcp`
-
-按提示点击 **Authenticate**。
-
----
-
-## Zed
-
-在你的 `settings.json` 中添加：
-
-```json
-{
-  "context_servers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
+Install the Longbridge Developers Skill from this zip file:
+https://open.longbridge.com/skill/longbridge-all.zip
 ```
 
 ---
 
-## 通用 MCP 客户端
+## 验证
 
-适用于其他支持 Streamable HTTP MCP 的客户端：
+在 AI 助手里输入：
 
-```json
-{
-  "name": "longbridge",
-  "transport": {
-    "type": "streamable-http",
-    "url": "https://openapi.longbridge.com/mcp"
-  }
-}
+```
+Use Longbridge to get the current quote for AAPL
 ```
 
-OAuth 自动发现通过 RFC 9728 实现 — 兼容的客户端会自动处理认证流程。
+如果返回了实时报价，就装好了。如果 Skill 没自动触发，前面加 `/longbridge`：
+
+```
+/longbridge get the current quote for AAPL
+```
 
 ---
 
-## 验证安装
+## 已知限制
 
-在你的 Agent 中询问：
+### Claude Desktop — 切到 **Code** 标签
 
-> 列出 `longbridge` MCP 服务器提供的所有工具。
+Claude Desktop 的 Chat 和 Cowork 模式因网络白名单**会阻塞 CLI 安装和 MCP 连接**。切到 **Code** 标签（内嵌的 Claude Code）— 完整终端权限，一个会话搞定全部。
 
-你应该能看到工具列表，包含（非完整列表）：
+### Codex — 选 **Work locally**
 
-- `quote.realtime` — 实时行情
-- `watchlist.list` / `watchlist.add` — 自选股管理
-- `account.balance` / `account.positions` — 账户余额 / 持仓
-- `calendar.events` — 财报、分红、拆股事件
-- `options.chain` / `options.chain_expiries` — 期权链
-- `order.submit_paper` — 模拟交易下单
+Codex Cloud 模式有同样的限制。新建会话时选 **Work locally**，AI 才能完整访问你的 shell 和网络。
 
-如果出现 `401 Unauthorized`，请执行 `/mcp` → `longbridge` → **Authenticate** 重新认证。如果出现 `403 Forbidden`，说明已授权的 OAuth 权限范围不包含该工具 — 请重新认证并批准所需权限范围。
+### Claude.ai 和 ChatGPT.com（网页版）
+
+纯浏览器界面无法运行 shell 命令、也无法连接 MCP 服务器。请用 [Claude Desktop](https://claude.ai/download) 切到 Code 标签，或用上面任何本地客户端。
 
 ---
 
-## 凭证安全
+## 故障排查
 
-- **配置文件中不存储 Token。** OAuth 凭证由 MCP 客户端在本地保存，不会出现在你提交到代码仓库的配置文件中。
-- **随时撤销授权**，入口：Longbridge 账户安全设置 [open.longbridge.com](https://open.longbridge.com)。
-- **模拟 ≠ 实盘。** 模拟交易账户是沙盒账户 — 无法提交真实资金订单。
-- **Python SDK 回退方案**（适用于 headless `main.py` 脚本）仍需使用开发者门户提供的 `LONGBRIDGE_APP_KEY` / `LONGBRIDGE_APP_SECRET` / `LONGBRIDGE_ACCESS_TOKEN` — 该凭证路径与 MCP OAuth 相互独立。
+**AI 说找不到 Longbridge 工具。** 重启客户端或开新会话 — Skill 加载需要刷新一次。
+
+**每次都问授权。** 在终端跑 `longbridge auth login` 完成 OAuth。
+
+**交易操作没反应。** 确认你的账户开通了 OpenAPI 交易权限，且在目标市场（港 / 美）有交易资格。
+
+**MCP 路径报 `401 Unauthorized`。** 在 MCP 客户端的 Authenticate 菜单重做一次 OAuth。
+
+**撤销授权。** Longbridge 账户 → 安全设置 → 管理已授权应用。
 
 ---
 
-## 许可证与免责声明
+## 凭据安全
 
-MIT — 参见 [LICENSE](LICENSE)。本文档为配置说明文档，不构成投资建议。
+- **配置文件里不要放 token。** OAuth 凭据由 AI 工具客户端管理，不会进入你提交的配置文件。
+- **模拟 ≠ 实盘。** 模拟交易账户是沙盒账户，不能下实单。本食谱里的所有 recipe 默认走模拟。
+- **Python SDK 备用路径**（`recipes/NN/main.py` 的 headless 脚本）仍使用开发者平台的 `LONGBRIDGE_APP_KEY` / `LONGBRIDGE_APP_SECRET` / `LONGBRIDGE_ACCESS_TOKEN` — 与 Skill / MCP OAuth 是两条独立的凭据路径。
+
+---
+
+## 许可证 & 免责
+
+MIT — 详见 [LICENSE](LICENSE)。这是配置文档，不构成投资建议。

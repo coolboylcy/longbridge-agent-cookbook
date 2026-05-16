@@ -1,32 +1,76 @@
 > 🌐 **Language / 语言 / 語言:** [English](MCP_SETUP.md) · [简体中文](MCP_SETUP.zh-CN.md) · 繁體中文
 
-# MCP 設定指南 — Longbridge MCP
+# 安裝指南 — 把 Longbridge 接到你的 AI 助手
 
-將 **Longbridge MCP** 伺服器安裝到任意相容 MCP 的 Agent 的單頁參考文件。選擇你使用的客戶端，複製對應的設定片段即可。
+這是簡化的食譜版。**官方權威指南**在 <https://open.longbridge.com/skill/install.md> — 如有不一致以官方為準。
 
-> 認證採用 **OAuth 2.1** — 無需在設定檔中管理 API Token。首次呼叫工具時，瀏覽器會自動彈出 Longbridge 登入頁面。請在 [open.longbridge.com](https://open.longbridge.com) 註冊或登入。模擬交易帳戶使用相同的登入流程。
+安裝是**兩步流程**：
 
----
+1. **連接** AI 工具到 Longbridge 平台 — CLI（推薦）或 MCP 二選一
+2. **安裝 Skill** — 一組指令檔案，告訴 AI Longbridge 能做什麼
 
-## 伺服器端點
-
-| 欄位       | 值                                        |
-| ---------- | ----------------------------------------- |
-| 伺服器名稱 | `longbridge`                              |
-| 傳輸協定   | Streamable HTTP                           |
-| URL        | `https://openapi.longbridge.com/mcp`      |
-| 認證方式   | OAuth 2.1（瀏覽器流程，自動探索）         |
-
-> **注意：** 舊版 SSE 端點（`https://mcp.longbridgeapp.com/sse`）已棄用，請使用上方的 HTTP 端點。
+少做哪一步，AI 都沒法操盤。
 
 ---
 
-## Claude Desktop
+## 第一步 — 連接到 Longbridge 平台
 
-編輯你的 `claude_desktop_config.json`：
+下面兩種方法選**一種**。
 
-- macOS：`~/Library/Application Support/Claude/claude_desktop_config.json`
-- Windows：`%APPDATA%\Claude\claude_desktop_config.json`
+| 路徑                  | 適合誰                                                                | 需要本地安裝？ |
+| --------------------- | --------------------------------------------------------------------- | -------------- |
+| **A. CLI**（推薦） | Claude Code、Codex（Work locally）、opencode、OpenClaw、Warp、Gemini CLI | 是             |
+| **B. MCP**            | Claude Desktop、Cursor、Zed、Gemini CLI、Warp                         | 否             |
+
+### 方法 A — CLI（推薦）
+
+安裝 `longbridge` 終端程式，AI 透過 shell 指令呼叫它。
+
+**macOS — Homebrew：**
+
+```bash
+brew install --cask longbridge/tap/longbridge-terminal
+```
+
+**macOS / Linux — curl：**
+
+```bash
+curl -sSL https://open.longbridge.com/longbridge/longbridge-terminal/install | sh
+```
+
+**Windows — Scoop：**
+
+```powershell
+scoop install https://open.longbridge.com/longbridge/longbridge-terminal/longbridge.json
+```
+
+**Windows — PowerShell：**
+
+```powershell
+iwr https://open.longbridge.com/longbridge/longbridge-terminal/install.ps1 | iex
+```
+
+**授權登入：**
+
+```bash
+longbridge auth login
+```
+
+瀏覽器會自動打開 OAuth 登入頁。模擬交易帳戶走同一流程。
+
+**Claude Code 使用者 — 一次性允許 `longbridge` 指令**，避免每次問權限。在專案根目錄的 `.claude/settings.json` 加：
+
+```json
+{
+  "permissions": {
+    "allow": ["Bash(longbridge *)"]
+  }
+}
+```
+
+### 方法 B — MCP
+
+在 AI 工具的設定裡加上 Longbridge 遠端 MCP 伺服器：
 
 ```json
 {
@@ -38,133 +82,117 @@
 }
 ```
 
-重新啟動 Claude Desktop。首次呼叫工具時，瀏覽器會自動開啟 OAuth 登入頁面。
+> **中國大陸使用者**可使用加速端點：`https://openapi.longbridge.cn/mcp`
+
+| 客戶端         | 在哪裡設定                                                                                                                                |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Claude Desktop | 編輯 `~/Library/Application Support/Claude/claude_desktop_config.json`（macOS）或 `%APPDATA%\Claude\claude_desktop_config.json`（Windows） |
+| Cursor         | Settings → MCP Servers → Add Remote MCP Server                                                                                            |
+| Zed            | `~/.config/zed/settings.json` 中的 `context_servers` 鍵                                                                                   |
+| Gemini CLI     | `~/.gemini/settings.json` 中的 `mcpServers` 鍵                                                                                            |
+| Warp           | Settings → AI → MCP Servers → Add                                                                                                         |
+
+第一次提到 Longbridge 時，客戶端會自動打開瀏覽器 OAuth 授權 — 不需要在設定檔裡放 API key。
 
 ---
 
-## Cursor
+## 第二步 — 安裝 Skill
 
-開啟 **Settings → MCP**，點擊 **Add Remote MCP Server**，然後貼上：
+Skill 是一組指令檔案，告訴 AI 助手 Longbridge 能做什麼、怎麼呼叫。**沒裝 Skill 的話，AI 可能完成第一步後仍然不知道用 Longbridge。**
+
+**Claude Code 外掛（Claude Code 使用者推薦）：**
+
+在 Claude Code 對話裡執行：
 
 ```
-https://openapi.longbridge.com/mcp
+/plugin marketplace add longbridge/skills
+/plugin install longbridge@longbridge-skills
 ```
 
-或直接編輯 `~/.cursor/mcp.json`：
+透過 Claude Code 外掛系統自動更新。
 
-```json
-{
-  "mcpServers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
-```
-
-重新載入視窗。首次使用時 OAuth 流程會自動啟動。
-
----
-
-## Claude Code
-
-在終端機執行一行指令完成安裝：
+**npx / bunx（任何工具）：**
 
 ```bash
-claude mcp add --transport http longbridge https://openapi.longbridge.com/mcp
+# Node
+npx skills add longbridge/skills -g
+# Bun
+bunx skills add longbridge/skills -g
 ```
 
-然後進行認證：
+需要 [Node.js](https://nodejs.org) 或 [Bun](https://bun.sh)。
 
-```bash
-# 在 Claude Code 工作階段中執行
-/mcp
-# 選擇 "longbridge" → Authenticate
+**ZIP 下載（手動）：**
+
+下載 <https://open.longbridge.com/skill/longbridge-all.zip>，解壓，放到 AI 工具的 Skill 目錄：
+
+- Claude Code：`.claude/skills/`
+- Cursor：貼到 Rules 編輯器
+- 其他：見 ZIP 內的 README
+
+**OpenClaw** — 直接在聊天裡發，自動安裝：
+
 ```
-
-或驗證伺服器是否已註冊：
-
-```bash
-claude mcp list
-# longbridge   https://openapi.longbridge.com/mcp   connected
-```
-
----
-
-## Codex
-
-開啟 **Settings → MCP Servers → Add Server**，填寫：
-
-- **Name**：`longbridge`
-- **Type**：Streamable HTTP
-- **URL**：`https://openapi.longbridge.com/mcp`
-
-依提示點擊 **Authenticate**。
-
----
-
-## Zed
-
-在你的 `settings.json` 中新增：
-
-```json
-{
-  "context_servers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
+Install the Longbridge Developers Skill from this zip file:
+https://open.longbridge.com/skill/longbridge-all.zip
 ```
 
 ---
 
-## 通用 MCP 客戶端
+## 驗證
 
-適用於其他支援 Streamable HTTP MCP 的客戶端：
+在 AI 助手裡輸入：
 
-```json
-{
-  "name": "longbridge",
-  "transport": {
-    "type": "streamable-http",
-    "url": "https://openapi.longbridge.com/mcp"
-  }
-}
+```
+Use Longbridge to get the current quote for AAPL
 ```
 
-OAuth 自動探索透過 RFC 9728 實作 — 相容的客戶端會自動處理認證流程。
+如果回傳了即時報價，就裝好了。如果 Skill 沒自動觸發，前面加 `/longbridge`：
+
+```
+/longbridge get the current quote for AAPL
+```
 
 ---
 
-## 驗證安裝
+## 已知限制
 
-在你的 Agent 中詢問：
+### Claude Desktop — 切到 **Code** 標籤
 
-> 列出 `longbridge` MCP 伺服器提供的所有工具。
+Claude Desktop 的 Chat 和 Cowork 模式因網路白名單**會阻擋 CLI 安裝和 MCP 連線**。切到 **Code** 標籤（內嵌的 Claude Code）— 完整終端權限，一個對話搞定全部。
 
-你應該能看到工具目錄，包含（非完整清單）：
+### Codex — 選 **Work locally**
 
-- `quote.realtime` — 即時報價
-- `watchlist.list` / `watchlist.add` — 自選股管理
-- `account.balance` / `account.positions` — 帳戶餘額 / 持倉
-- `calendar.events` — 財報、股息、股票分割事件
-- `options.chain` / `options.chain_expiries` — 期權鏈
-- `order.submit_paper` — 模擬交易下單
+Codex Cloud 模式有同樣的限制。新建對話時選 **Work locally**，AI 才能完整存取你的 shell 和網路。
 
-如果出現 `401 Unauthorized`，請執行 `/mcp` → `longbridge` → **Authenticate** 重新認證。如果出現 `403 Forbidden`，表示已授權的 OAuth 權限範圍不包含該工具 — 請重新認證並核准所需的權限範圍。
+### Claude.ai 和 ChatGPT.com（網頁版）
+
+純瀏覽器介面無法執行 shell 指令、也無法連線 MCP 伺服器。請用 [Claude Desktop](https://claude.ai/download) 切到 Code 標籤，或用上面任何本地客戶端。
+
+---
+
+## 故障排除
+
+**AI 說找不到 Longbridge 工具。** 重啟客戶端或開新對話 — Skill 載入需要刷新一次。
+
+**每次都問授權。** 在終端跑 `longbridge auth login` 完成 OAuth。
+
+**交易操作沒反應。** 確認你的帳戶開通了 OpenAPI 交易權限，且在目標市場（港 / 美）有交易資格。
+
+**MCP 路徑報 `401 Unauthorized`。** 在 MCP 客戶端的 Authenticate 選單重做一次 OAuth。
+
+**撤銷授權。** Longbridge 帳戶 → 安全設定 → 管理已授權應用。
 
 ---
 
 ## 憑證安全
 
-- **設定檔中不儲存 Token。** OAuth 憑證由 MCP 客戶端在本機保存，不會出現在你提交至程式碼儲存庫的設定檔中。
-- **隨時撤銷授權**，入口：Longbridge 帳戶安全設定 [open.longbridge.com](https://open.longbridge.com)。
-- **模擬 ≠ 實盤。** 模擬交易帳戶是沙盒帳戶 — 無法提交真實資金訂單。
-- **Python SDK 備用方案**（適用於 headless `main.py` 腳本）仍需使用開發者入口網站提供的 `LONGBRIDGE_APP_KEY` / `LONGBRIDGE_APP_SECRET` / `LONGBRIDGE_ACCESS_TOKEN` — 該憑證路徑與 MCP OAuth 相互獨立。
+- **設定檔裡不要放 token。** OAuth 憑證由 AI 工具客戶端管理，不會進入你提交的設定檔。
+- **模擬 ≠ 實盤。** 模擬交易帳戶是沙盒帳戶，不能下實單。本食譜裡的所有 recipe 預設走模擬。
+- **Python SDK 備用路徑**（`recipes/NN/main.py` 的 headless 腳本）仍使用開發者平台的 `LONGBRIDGE_APP_KEY` / `LONGBRIDGE_APP_SECRET` / `LONGBRIDGE_ACCESS_TOKEN` — 與 Skill / MCP OAuth 是兩條獨立的憑證路徑。
 
 ---
 
-## 授權與免責聲明
+## 授權 & 免責
 
-MIT — 參見 [LICENSE](LICENSE)。本文件為設定說明文件，不構成投資建議。
+MIT — 詳見 [LICENSE](LICENSE)。這是設定文件，不構成投資建議。

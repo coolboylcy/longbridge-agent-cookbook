@@ -35,69 +35,78 @@ This is **not** a trading framework, a backtester, or investment advice. It's a 
 
 ---
 
-## 5-minute quickstart (MCP-first)
+## 5-minute quickstart
 
-The whole point of MCP is that you don't have to clone anything to start. Here's the canonical flow:
+Setup is a **two-step process** — same as the [official Longbridge guide](https://open.longbridge.com/skill/install.md):
 
-### Step 1 — Install the Longbridge MCP into your agent
+1. **Connect** your AI tool to the Longbridge platform — via CLI (recommended) or MCP
+2. **Install the Skill** — instruction files that tell your AI what Longbridge can do
 
-Pick your client and paste the matching snippet. Full reference: [`MCP_SETUP.md`](MCP_SETUP.md).
+Full reference for both steps: [`MCP_SETUP.md`](MCP_SETUP.md).
 
-**Claude Desktop** — edit `claude_desktop_config.json`:
+### Step 1 — Connect
 
-```json
-{
-  "mcpServers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
-```
-
-Restart Claude Desktop. On first tool call, a browser window opens for OAuth login.
-
-**Cursor** — Settings → MCP → Add Remote MCP Server, paste the URL:
-
-```
-https://openapi.longbridge.com/mcp
-```
-
-Or edit `~/.cursor/mcp.json` directly:
-
-```json
-{
-  "mcpServers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
-```
-
-**Claude Code** — one-liner:
+**Method A — CLI (recommended).** Works with Claude Code, Codex (Work locally), opencode, OpenClaw, Warp, Gemini CLI.
 
 ```bash
-claude mcp add --transport http longbridge https://openapi.longbridge.com/mcp
+# macOS
+brew install --cask longbridge/tap/longbridge-terminal
+
+# macOS / Linux (no Homebrew)
+curl -sSL https://open.longbridge.com/longbridge/longbridge-terminal/install | sh
+
+# Windows (PowerShell)
+iwr https://open.longbridge.com/longbridge/longbridge-terminal/install.ps1 | iex
 ```
 
-Then run `/mcp` inside Claude Code, select `longbridge`, and choose **Authenticate** to complete the OAuth flow.
+Then authenticate:
 
-Sign up or log in at [open.longbridge.com](https://open.longbridge.com). Paper-trading accounts work with the same OAuth flow — no separate token needed.
+```bash
+longbridge auth login
+```
 
-### Step 2 — Open your agent and paste a recipe prompt
+**Method B — MCP.** Works with Claude Desktop, Cursor, Zed, Gemini CLI, Warp. Add to your client's MCP config:
 
-Open Claude Desktop (or Cursor / Codex). Paste, for example:
+```json
+{
+  "mcpServers": {
+    "longbridge": {
+      "url": "https://openapi.longbridge.com/mcp"
+    }
+  }
+}
+```
 
-> Using the Longbridge MCP, look at my watchlist. For every ticker with earnings in the next 24 hours, pull last quarter's results, the consensus estimate, and the front-week options-implied move. Write a tight Markdown brief per ticker.
+> Mainland China users: use `https://openapi.longbridge.cn/mcp` for the accelerated endpoint.
 
-### Step 3 — Watch your agent run
+On first tool call a browser window opens for OAuth login. Paper-trading accounts use the same flow. Sign up at [open.longbridge.com](https://open.longbridge.com).
 
-The agent will call Longbridge MCP tools in sequence (`watchlist.list`, `calendar.events`, `fundamentals.quarterly`, `options.chain`...) and produce a Markdown brief. That's the whole loop.
+### Step 2 — Install the Skill
 
-> No Python. No cloning. No SDK setup. That's MCP-first.
+The Skill is a bundle of instruction files that tells your AI what Longbridge can do. **Without it, your AI may not know to use Longbridge even after Step 1.**
 
-Want a deeper, opinionated prompt with screenshots and tool-call walkthroughs? See the [recipes](#recipes) below.
+```bash
+# Claude Code plugin (recommended)
+/plugin marketplace add longbridge/skills
+/plugin install longbridge@longbridge-skills
+
+# Or npx / bunx (any tool)
+npx skills add longbridge/skills -g
+```
+
+Or download <https://open.longbridge.com/skill/longbridge-all.zip> and drop into your AI tool's Skill directory.
+
+### Step 3 — Try a recipe prompt
+
+Open any [recipe](#recipes) page, copy the prompt, paste into Claude (or click **Open in Claude**). The agent will call Longbridge tools and produce a Markdown brief. That's the whole loop.
+
+> No Python. No cloning. No SDK setup.
+
+### Known restrictions
+
+- **Claude Desktop:** Chat / Cowork modes block CLI install and MCP connections. Switch to the **Code** tab (embedded Claude Code) for full terminal access.
+- **Codex:** Cloud mode has the same restriction. Start a new session and pick **Work locally**.
+- **Claude.ai / ChatGPT web:** browser-only interfaces can't run shell commands or connect to MCP. Use a local client.
 
 ---
 
@@ -105,9 +114,9 @@ Want a deeper, opinionated prompt with screenshots and tool-call walkthroughs? S
 
 | #   | Recipe                                          | What it does                                                                        | Status      |
 | --- | ----------------------------------------------- | ----------------------------------------------------------------------------------- | ----------- |
-| 01  | [Earnings Monitor](recipes/01_earnings_monitor) | Agent watches your watchlist for upcoming earnings; 24h pre-brief + 1h post-recap.  | scaffolded  |
-| 02  | [Options Scanner](recipes/02_options_scanner)   | **AI agent options scanner** for high-IV-rank covered calls on your watchlist.      | scaffolded  |
-| 03  | [Portfolio Review](recipes/03_portfolio_review) | Agent ingests your paper positions; writes a weekly review with 3 observations + 3 Qs. | scaffolded  |
+| 01  | [Earnings Monitor](recipes/01_earnings_monitor) | Agent watches your watchlist for upcoming earnings; 24h pre-brief + 1h post-recap.  | [live](https://earnings-monitor-ochre.vercel.app)  |
+| 02  | [Options Scanner](recipes/02_options_scanner)   | **AI agent options scanner** for high-IV-rank covered calls on your watchlist.      | [live](https://options-scanner-three.vercel.app)   |
+| 03  | [Portfolio Review](recipes/03_portfolio_review) | Agent ingests your paper positions; writes a weekly review with 3 observations + 3 Qs. | [live](https://portfolio-review-three.vercel.app)  |
 
 More coming. Have a recipe idea? [Open an issue](https://github.com/coolboylcy/longbridge-agent-cookbook/issues/new) or read [CONTRIBUTING.md](CONTRIBUTING.md).
 

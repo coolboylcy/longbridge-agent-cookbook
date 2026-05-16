@@ -35,69 +35,78 @@
 
 ---
 
-## 5 分钟快速上手（MCP 优先）
+## 5 分钟快速上手
 
-MCP 的核心价值在于你无需克隆任何东西就能开始。标准流程如下：
+安装是**两步流程** — 与 [Longbridge 官方指南](https://open.longbridge.com/skill/install.md) 一致：
 
-### 第一步 — 将 Longbridge MCP 安装到你的 Agent
+1. **连接** AI 工具到 Longbridge 平台 — CLI（推荐）或 MCP 二选一
+2. **安装 Skill** — 一组指令文件，告诉 AI Longbridge 能做什么
 
-选择你的客户端，粘贴对应的配置片段。完整参考：[`MCP_SETUP.md`](MCP_SETUP.md)。
+两步的完整参考：[`MCP_SETUP.md`](MCP_SETUP.zh-CN.md)。
 
-**Claude Desktop** — 编辑 `claude_desktop_config.json`：
+### 第一步 — 连接
 
-```json
-{
-  "mcpServers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
-```
-
-重启 Claude Desktop，首次调用工具时浏览器会自动打开 OAuth 登录页面。
-
-**Cursor** — 设置 → MCP → 添加 Remote MCP Server，粘贴 URL：
-
-```
-https://openapi.longbridge.com/mcp
-```
-
-或直接编辑 `~/.cursor/mcp.json`：
-
-```json
-{
-  "mcpServers": {
-    "longbridge": {
-      "url": "https://openapi.longbridge.com/mcp"
-    }
-  }
-}
-```
-
-**Claude Code** — 一行命令：
+**方法 A — CLI（推荐）。** 支持 Claude Code、Codex（Work locally）、opencode、OpenClaw、Warp、Gemini CLI。
 
 ```bash
-claude mcp add --transport http longbridge https://openapi.longbridge.com/mcp
+# macOS
+brew install --cask longbridge/tap/longbridge-terminal
+
+# macOS / Linux（无 Homebrew）
+curl -sSL https://open.longbridge.com/longbridge/longbridge-terminal/install | sh
+
+# Windows (PowerShell)
+iwr https://open.longbridge.com/longbridge/longbridge-terminal/install.ps1 | iex
 ```
 
-然后在 Claude Code 中运行 `/mcp`，选择 `longbridge`，点击 **Authenticate** 完成 OAuth 授权。
+然后授权：
 
-在 [open.longbridge.com](https://open.longbridge.com) 注册或登录。模拟交易账户同样使用 OAuth 流程，无需单独申请 Token。
+```bash
+longbridge auth login
+```
 
-### 第二步 — 打开 Agent，粘贴食谱 Prompt
+**方法 B — MCP。** 支持 Claude Desktop、Cursor、Zed、Gemini CLI、Warp。在客户端的 MCP 配置加：
 
-打开 Claude Desktop（或 Cursor / Codex），粘贴示例 Prompt：
+```json
+{
+  "mcpServers": {
+    "longbridge": {
+      "url": "https://openapi.longbridge.com/mcp"
+    }
+  }
+}
+```
 
-> 使用 Longbridge MCP，查看我的自选股。对于未来 24 小时内有财报的每只股票，获取上季度业绩、市场一致预期和近周期权隐含波动幅度。每只股票输出一份简洁的 Markdown 摘要。
+> 中国大陆用户使用加速端点：`https://openapi.longbridge.cn/mcp`
 
-### 第三步 — 观看 Agent 运行
+首次调用工具时浏览器自动打开 OAuth 登录。模拟交易账户走同一流程。在 [open.longbridge.com](https://open.longbridge.com) 注册或登录。
 
-Agent 将依次调用 Longbridge MCP 工具（`watchlist.list`、`calendar.events`、`fundamentals.quarterly`、`options.chain`……）并生成 Markdown 摘要。整个循环就是这么简单。
+### 第二步 — 安装 Skill
 
-> 无需 Python，无需克隆，无需 SDK 配置。这就是 MCP 优先。
+Skill 是一组指令文件，告诉 AI Longbridge 能做什么。**没装 Skill 的话，AI 可能完成第一步后仍然不知道用 Longbridge。**
 
-想要附带截图和工具调用演示的深度 Prompt？请查看下方[食谱](#食谱)。
+```bash
+# Claude Code 插件（推荐）
+/plugin marketplace add longbridge/skills
+/plugin install longbridge@longbridge-skills
+
+# 或 npx / bunx（任何工具）
+npx skills add longbridge/skills -g
+```
+
+也可以下载 <https://open.longbridge.com/skill/longbridge-all.zip>，放进 AI 工具的 Skill 目录。
+
+### 第三步 — 试一个食谱 Prompt
+
+打开任意 [食谱](#食谱) 页面，复制 Prompt 贴到 Claude（或点 **Open in Claude**）。Agent 会调用 Longbridge 工具并生成 Markdown 报告。整个循环就这么简单。
+
+> 不用 Python。不用 clone。不用配 SDK。
+
+### 已知限制
+
+- **Claude Desktop：** Chat / Cowork 模式会阻塞 CLI 安装和 MCP 连接。切到 **Code** 标签（内嵌 Claude Code）才有完整终端权限。
+- **Codex：** Cloud 模式有同样的限制。新建会话时选 **Work locally**。
+- **Claude.ai / ChatGPT 网页版：** 纯浏览器界面无法运行 shell 命令、也无法连接 MCP。请用本地客户端。
 
 ---
 
@@ -105,9 +114,9 @@ Agent 将依次调用 Longbridge MCP 工具（`watchlist.list`、`calendar.event
 
 | #   | 食谱                                              | 功能说明                                                                          | 状态        |
 | --- | ------------------------------------------------- | --------------------------------------------------------------------------------- | ----------- |
-| 01  | [财报监控](recipes/01_earnings_monitor)           | Agent 监控自选股即将到来的财报；提前 24 小时预报 + 财报后 1 小时复盘。            | 已搭建      |
-| 02  | [期权扫描器](recipes/02_options_scanner)          | **AI Agent 期权扫描器**，筛选自选股中 IV Rank 较高的备兑看涨期权机会。            | 已搭建      |
-| 03  | [投资组合回顾](recipes/03_portfolio_review)       | Agent 读取模拟持仓，生成含 3 个核心观察点和 3 个跟进问题的周度复盘报告。          | 已搭建      |
+| 01  | [财报监控](recipes/01_earnings_monitor)           | Agent 监控自选股即将到来的财报；提前 24 小时预报 + 财报后 1 小时复盘。            | [上线](https://earnings-monitor-ochre.vercel.app)  |
+| 02  | [期权扫描器](recipes/02_options_scanner)          | **AI Agent 期权扫描器**，筛选自选股中 IV Rank 较高的备兑看涨期权机会。            | [上线](https://options-scanner-three.vercel.app)   |
+| 03  | [投资组合回顾](recipes/03_portfolio_review)       | Agent 读取模拟持仓，生成含 3 个核心观察点和 3 个跟进问题的周度复盘报告。          | [上线](https://portfolio-review-three.vercel.app)  |
 
 更多食谱持续更新中。有想法？[提 Issue](https://github.com/coolboylcy/longbridge-agent-cookbook/issues/new) 或阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
 

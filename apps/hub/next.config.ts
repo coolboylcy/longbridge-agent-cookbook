@@ -1,7 +1,5 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  transpilePackages: ["@cookbook/ui", "@cookbook/supabase", "@cookbook/longbridge"],
-};
+const nextConfig: NextConfig = {};
 
 export default nextConfig;
