@@ -1,15 +1,23 @@
 import type { HubContent, Locale } from "../content/types";
-import { Navbar } from "./ui/navbar";
-import { AppCard } from "./ui/app-card";
+import { SiteNav } from "./ui/site-nav";
+import { RecipeCard } from "./ui/recipe-card";
 
-const MCP_SETUP_URL =
-  "https://github.com/coolboylcy/longbridge-agent-cookbook/blob/main/MCP_SETUP.md";
-
-function SectionTitle({ children }: { children: React.ReactNode }) {
+function SectionTitle({
+  children,
+  count,
+}: {
+  children: React.ReactNode;
+  count?: string;
+}) {
   return (
-    <h2 className="mb-6 text-base font-semibold text-[var(--color-lb-text)]">
-      {children}
-    </h2>
+    <div className="mb-5 flex items-baseline justify-between">
+      <h2 className="text-xl font-bold tracking-tight text-[var(--color-lb-text)]">
+        {children}
+      </h2>
+      {count && (
+        <span className="text-xs text-[var(--color-lb-muted)]">{count}</span>
+      )}
+    </div>
   );
 }
 
@@ -22,130 +30,171 @@ export function HubTemplate({
 }) {
   const c = content;
   return (
-    <article>
-      <Navbar locale={locale} brand={c.nav.brand} />
+    <div>
+      <SiteNav
+        locale={locale}
+        brand={c.nav.brand}
+        links={c.nav.links}
+        searchPlaceholder={c.nav.searchPlaceholder}
+        signIn={c.nav.signIn}
+        signInHref={c.nav.signInHref}
+      />
 
-      {/* Hero */}
-      <div className="px-6 pt-20 pb-16">
-        <div className="mx-auto max-w-3xl">
-          <div className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-lb-green)]">
-            {c.hero.eyebrow}
+      {/* Hero — civitai-style: dense, vivid, full-width */}
+      <section className="relative overflow-hidden border-b border-[var(--color-lb-border)]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 opacity-60"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 50% at 30% 0%, rgba(0,200,150,0.10), transparent 60%), radial-gradient(ellipse 50% 50% at 80% 100%, rgba(77,171,247,0.08), transparent 60%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-7xl px-4 py-16 lg:px-6 lg:py-24">
+          <div className="max-w-3xl">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--color-lb-border)] bg-[var(--color-lb-surface)] px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--color-lb-green)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-lb-green)]" />
+              {c.hero.eyebrow}
+            </div>
+            <h1 className="text-[40px] font-extrabold leading-[1.05] tracking-tight text-[var(--color-lb-text)] md:text-[56px]">
+              {c.hero.title}
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-lb-text-dim)] md:text-lg">
+              {c.hero.description}
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a
+                href={c.hero.primaryCtaHref}
+                className="inline-flex items-center gap-2 rounded-md bg-[var(--color-lb-green)] px-4 py-2.5 text-sm font-bold text-[var(--color-lb-bg)] transition-colors hover:bg-[var(--color-lb-green-dim)]"
+              >
+                {c.hero.primaryCta}
+              </a>
+              <a
+                href={c.hero.secondaryCtaHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-md border border-[var(--color-lb-border-strong)] bg-[var(--color-lb-surface)] px-4 py-2.5 text-sm font-semibold text-[var(--color-lb-text)] transition-colors hover:border-[var(--color-lb-green)]/40"
+              >
+                {c.hero.secondaryCta} ↗
+              </a>
+            </div>
           </div>
-          <h1 className="text-[52px] font-bold leading-[1.04] tracking-tight text-[var(--color-lb-text)]">
-            {c.hero.title}
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[var(--color-lb-muted)]">
-            {c.hero.description}
-          </p>
         </div>
-      </div>
+      </section>
 
-      <div className="mx-auto max-w-3xl px-6 pb-24">
-        {/* MCP banner */}
+      <div className="mx-auto max-w-7xl px-4 lg:px-6">
+        {/* Setup banner — sticky-looking ribbon */}
         <a
-          href={MCP_SETUP_URL}
+          href={c.setupBanner.primaryHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="mb-14 flex items-center justify-between gap-4 rounded-md border border-l-2 border-l-[var(--color-lb-green)] border-[var(--color-lb-border)] bg-[var(--color-lb-surface)] px-5 py-4 transition-colors hover:border-[var(--color-lb-green)]/40"
+          className="mt-8 flex items-center gap-4 rounded-lg border border-[var(--color-lb-border)] border-l-[3px] border-l-[var(--color-lb-green)] bg-[var(--color-lb-surface)] px-5 py-4 transition-colors hover:border-[var(--color-lb-border-strong)] hover:border-l-[var(--color-lb-green)]"
         >
-          <div>
-            <div className="text-sm font-semibold text-[var(--color-lb-text)]">
-              {c.mcpBanner.title}
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[var(--color-lb-green-soft)] text-[var(--color-lb-green)]">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-5 w-5"
+            >
+              <polyline points="13 17 18 12 13 7" />
+              <polyline points="6 17 11 12 6 7" />
+            </svg>
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="text-sm font-bold text-[var(--color-lb-text)]">
+              {c.setupBanner.title}
             </div>
-            <div className="mt-0.5 text-xs text-[var(--color-lb-muted)]">
-              {c.mcpBanner.detail}
+            <div className="mt-0.5 truncate text-xs text-[var(--color-lb-muted)]">
+              {c.setupBanner.body}
             </div>
           </div>
-          <span className="shrink-0 text-xs font-medium text-[var(--color-lb-green)]">
-            {c.mcpBanner.cta}
+          <span className="hidden shrink-0 text-xs font-semibold text-[var(--color-lb-green)] sm:inline">
+            {c.setupBanner.primary}
           </span>
         </a>
 
-        {/* Recipes */}
-        <section className="mb-20">
-          <SectionTitle>{c.recipesSection.title}</SectionTitle>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {c.recipes.map((r) => (
-              <AppCard key={r.title} {...r} />
+        {/* Recipes grid */}
+        <section id="recipes" className="mt-12 scroll-mt-20">
+          <SectionTitle count={c.recipesSection.countLabel(c.recipes.length)}>
+            {c.recipesSection.title}
+          </SectionTitle>
+
+          {/* Filter chip row (visual placeholder — chips are decorative for now) */}
+          <div className="mb-6 -mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
+            {c.filterBar.filters.map((f, i) => (
+              <button
+                key={f.value}
+                type="button"
+                className={
+                  i === 0
+                    ? "shrink-0 rounded-full bg-[var(--color-lb-green-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--color-lb-green)]"
+                    : "shrink-0 rounded-full border border-[var(--color-lb-border)] bg-[var(--color-lb-surface)] px-3 py-1.5 text-xs font-medium text-[var(--color-lb-muted)] transition-colors hover:border-[var(--color-lb-border-strong)] hover:text-[var(--color-lb-text)]"
+                }
+              >
+                {f.label}
+              </button>
             ))}
           </div>
-        </section>
 
-        {/* Quickstart */}
-        <section className="mb-20">
-          <SectionTitle>{c.quickstart.title}</SectionTitle>
-          <ol className="space-y-5">
-            {c.quickstart.steps.map((s, i) => (
-              <li key={i} className="flex gap-5">
-                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--color-lb-green)] font-mono text-xs font-bold text-[var(--color-lb-bg)]">
-                  {i + 1}
-                </span>
-                <div>
-                  <div className="text-[15px] font-semibold text-[var(--color-lb-text)]">
-                    {s.title}
-                  </div>
-                  <div className="mt-1.5 text-sm leading-relaxed text-[var(--color-lb-muted)]">
-                    {s.body}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        {/* Why */}
-        <section className="mb-20">
-          <SectionTitle>{c.whyThisExists.title}</SectionTitle>
-          <div className="space-y-4">
-            {c.whyThisExists.body.map((p, i) => (
-              <p key={i} className="text-[15px] leading-relaxed text-[var(--color-lb-muted)]">
-                {p}
-              </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {c.recipes.map((r) => (
+              <RecipeCard key={r.slug} recipe={r} />
             ))}
           </div>
         </section>
 
         {/* FAQ */}
-        <section className="mb-20">
+        <section id="faq" className="mt-20 scroll-mt-20">
           <SectionTitle>{c.faq.title}</SectionTitle>
-          <ul className="space-y-6">
+          <div className="grid gap-3 md:grid-cols-2">
             {c.faq.items.map((item) => (
-              <li key={item.q}>
-                <div className="text-[15px] font-semibold text-[var(--color-lb-text)]">
+              <div
+                key={item.q}
+                className="rounded-lg border border-[var(--color-lb-border)] bg-[var(--color-lb-surface)] p-5"
+              >
+                <div className="text-sm font-bold text-[var(--color-lb-text)]">
                   {item.q}
                 </div>
-                <div className="mt-1.5 text-sm leading-relaxed text-[var(--color-lb-muted)]">
+                <div className="mt-2 text-sm leading-relaxed text-[var(--color-lb-muted)]">
                   {item.a}
                 </div>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        {/* Author */}
-        <section className="border-t border-[var(--color-lb-border)] pt-10">
-          <SectionTitle>{c.author.title}</SectionTitle>
-          <p className="text-[15px] text-[var(--color-lb-text)]">
-            {c.author.line}
-          </p>
-          <p className="mt-2 text-sm text-[var(--color-lb-muted)]">
-            {c.author.disclaimer}
-          </p>
-          <div className="mt-4 flex flex-wrap gap-4 text-sm">
-            {c.author.links.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[var(--color-lb-muted)] transition-colors hover:text-[var(--color-lb-text)]"
-              >
-                {l.label} ↗
-              </a>
+              </div>
             ))}
           </div>
         </section>
+
+        {/* Author */}
+        <section className="mt-20 mb-16 border-t border-[var(--color-lb-border)] pt-10">
+          <SectionTitle>{c.author.title}</SectionTitle>
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="text-[15px] text-[var(--color-lb-text)]">
+                {c.author.line}
+              </p>
+              <p className="mt-1 text-sm text-[var(--color-lb-muted)]">
+                {c.author.disclaimer}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-4 text-sm">
+              {c.author.links.map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--color-lb-muted)] transition-colors hover:text-[var(--color-lb-text)]"
+                >
+                  {l.label} ↗
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
-    </article>
+    </div>
   );
 }

@@ -57,6 +57,28 @@ const zhCN: PageContent = {
     description:
       "AI Agent 监看你的 Longbridge 自选股，提前 24 小时生成财报简报，公布后 1 小时生成复盘。",
     badges: ["新手友好", "模拟交易", "5 分钟上手"],
+    thumbnail: "earnings",
+    tags: [
+      { label: "财报", color: "blue" },
+      { label: "新手", color: "green" },
+      { label: "模拟", color: "neutral" },
+      { label: "MCP", color: "purple" },
+    ],
+  },
+  sidebar: {
+    title: "详情",
+    rows: [
+      { label: "食谱", value: "01 · 财报监控" },
+      { label: "难度", value: "新手" },
+      { label: "上手时间", value: "约 5 分钟" },
+      { label: "市场", value: "美股 · 港股" },
+      { label: "频率", value: "每天" },
+      { label: "交易模式", value: "仅限模拟" },
+      { label: "作者", value: "Chris Liang" },
+      { label: "授权", value: "MIT" },
+    ],
+    primaryCta: "在 Claude 打开",
+    primaryCtaHref: "",
   },
   whatItDoes: {
     title: "这个食谱做什么",
@@ -186,8 +208,16 @@ const zhCN: PageContent = {
     github: "GitHub ↗",
   },
   nav: {
-    brand: "Agent Cookbook",
+    brand: "Cookbook",
     allRecipes: "所有食谱",
+    links: [
+      { label: "所有食谱", href: "https://longbridge-cookbook-hub.vercel.app/zh-CN" },
+      { label: "安装", href: "https://github.com/coolboylcy/longbridge-agent-cookbook/blob/main/MCP_SETUP.zh-CN.md" },
+      { label: "GitHub", href: "https://github.com/coolboylcy/longbridge-agent-cookbook" },
+    ],
+    searchPlaceholder: "搜索食谱⋯",
+    signIn: "Longbridge",
+    signInHref: "https://longbridge.com",
   },
 };
 

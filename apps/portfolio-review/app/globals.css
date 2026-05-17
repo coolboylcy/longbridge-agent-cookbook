@@ -1,23 +1,49 @@
 @import "tailwindcss";
-
 @theme {
+  /* Civitai-style dark palette — deeper, slightly bluish */
+  --color-lb-bg: #16181d;
+  --color-lb-surface: #1f2128;
+  --color-lb-surface-2: #2a2d35;
+  --color-lb-surface-hover: #353841;
+  --color-lb-border: #2e313a;
+  --color-lb-border-strong: #40444f;
+  --color-lb-text: #f0f1f3;
+  --color-lb-text-dim: #c3c7cf;
+  --color-lb-muted: #8a8f9b;
+  --color-lb-muted-2: #5d626c;
+
+  /* Longbridge brand green (primary accent) */
   --color-lb-green: #00C896;
   --color-lb-green-dim: #00A878;
-  --color-lb-bg: #0A0E1A;
-  --color-lb-surface: #0F1624;
-  --color-lb-surface-2: #141E2E;
-  --color-lb-border: #1E2D42;
-  --color-lb-text: #E8EDF5;
-  --color-lb-muted: #6B7A9A;
-  --color-lb-red: #FF4D6A;
-  --color-lb-yellow: #F5A623;
+  --color-lb-green-soft: rgba(0, 200, 150, 0.12);
+
+  /* Multi-color tag palette (civitai-style) */
+  --color-tag-blue: #4dabf7;
+  --color-tag-blue-bg: rgba(77, 171, 247, 0.14);
+  --color-tag-purple: #b197fc;
+  --color-tag-purple-bg: rgba(177, 151, 252, 0.14);
+  --color-tag-orange: #ffa94d;
+  --color-tag-orange-bg: rgba(255, 169, 77, 0.14);
+  --color-tag-pink: #f783ac;
+  --color-tag-pink-bg: rgba(247, 131, 172, 0.14);
+  --color-tag-red: #ff6b6b;
+  --color-tag-red-bg: rgba(255, 107, 107, 0.14);
+  --color-tag-yellow: #ffd43b;
+  --color-tag-yellow-bg: rgba(255, 212, 59, 0.14);
+  --color-tag-teal: #20c997;
+  --color-tag-teal-bg: rgba(32, 201, 151, 0.14);
+
+  /* Aliases for legacy code */
+  --color-lb-red: #ff6b6b;
+  --color-lb-yellow: #ffd43b;
+
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --radius-lg: 8px;
 }
-
 html {
   background-color: var(--color-lb-bg);
   color: var(--color-lb-text);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: "ss01", "cv11";
 }

@@ -1,5 +1,28 @@
 export type Locale = "en" | "zh-HK" | "zh-CN";
 
+export type TagColor =
+  | "green"
+  | "blue"
+  | "purple"
+  | "orange"
+  | "pink"
+  | "yellow"
+  | "teal"
+  | "red"
+  | "neutral";
+
+export type ThumbnailKey = "earnings" | "options" | "portfolio";
+
+export interface Tag {
+  label: string;
+  color: TagColor;
+}
+
+export interface MetaRow {
+  label: string;
+  value: string;
+}
+
 export interface PageContent {
   meta: { title: string; description: string };
   hero: {
@@ -7,6 +30,14 @@ export interface PageContent {
     title: string;
     description: string;
     badges: string[];
+    tags: Tag[];
+    thumbnail: ThumbnailKey;
+  };
+  sidebar: {
+    title: string;
+    rows: MetaRow[];
+    primaryCta: string;
+    primaryCtaHref: string;
   };
   whatItDoes: { title: string; bullets: string[] };
   whatYouNeed: { title: string; items: { label: string; detail: string }[] };
@@ -38,5 +69,12 @@ export interface PageContent {
   };
   customize: { title: string; items: { label: string; detail: string }[] };
   footer: { backToHub: string; github: string };
-  nav: { brand: string; allRecipes: string };
+  nav: {
+    brand: string;
+    allRecipes: string;
+    links: { label: string; href: string }[];
+    searchPlaceholder: string;
+    signIn: string;
+    signInHref: string;
+  };
 }

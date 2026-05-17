@@ -57,6 +57,28 @@ const en: PageContent = {
     description:
       "An AI agent screens your Longbridge watchlist for the highest-yielding covered-call opportunities — filters by IV rank, delta, and earnings risk.",
     badges: ["Some options knowledge", "Paper trading", "5-min setup"],
+    thumbnail: "options",
+    tags: [
+      { label: "Options", color: "purple" },
+      { label: "Intermediate", color: "orange" },
+      { label: "Paper", color: "neutral" },
+      { label: "MCP", color: "purple" },
+    ],
+  },
+  sidebar: {
+    title: "Details",
+    rows: [
+      { label: "Recipe", value: "02 · Options Scanner" },
+      { label: "Difficulty", value: "Intermediate" },
+      { label: "Setup time", value: "~5 minutes" },
+      { label: "Market", value: "US (HK limited)" },
+      { label: "Cadence", value: "Weekly" },
+      { label: "Trading mode", value: "Paper only" },
+      { label: "Author", value: "Chris Liang" },
+      { label: "License", value: "MIT" },
+    ],
+    primaryCta: "Open in Claude",
+    primaryCtaHref: "",
   },
   whatItDoes: {
     title: "What it does",
@@ -186,8 +208,16 @@ const en: PageContent = {
     github: "GitHub ↗",
   },
   nav: {
-    brand: "Agent Cookbook",
+    brand: "Cookbook",
     allRecipes: "All recipes",
+    links: [
+      { label: "All recipes", href: "https://longbridge-cookbook-hub.vercel.app" },
+      { label: "Setup", href: "https://github.com/coolboylcy/longbridge-agent-cookbook/blob/main/MCP_SETUP.md" },
+      { label: "GitHub", href: "https://github.com/coolboylcy/longbridge-agent-cookbook" },
+    ],
+    searchPlaceholder: "Search recipes…",
+    signIn: "Longbridge",
+    signInHref: "https://longbridge.com",
   },
 };
 
