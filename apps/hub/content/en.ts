@@ -1,9 +1,9 @@
 import type { HubContent, RecipeCard } from "./types";
 
 const SETUP_URL =
-  "https://github.com/coolboylcy/longbridge-agent-cookbook/blob/main/MCP_SETUP.md";
+  "https://open.longbridge.com/skill/install.md";
 const ISSUES_URL =
-  "https://github.com/coolboylcy/longbridge-agent-cookbook/issues/new";
+  "https://github.com/longbridge/developers/issues/new";
 
 const RECIPES: RecipeCard[] = [
   // ─── Live ───────────────────────────────────────────────────────────
@@ -484,7 +484,7 @@ const en: HubContent = {
       { label: "Recipes", href: "#recipes" },
       { label: "Setup", href: SETUP_URL },
       { label: "FAQ", href: "#faq" },
-      { label: "GitHub", href: "https://github.com/coolboylcy/longbridge-agent-cookbook" },
+      { label: "GitHub", href: "https://github.com/longbridge/developers" },
     ],
     searchPlaceholder: "Search recipes…",
     signIn: "Longbridge",

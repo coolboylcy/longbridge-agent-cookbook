@@ -47,7 +47,7 @@ const zhHK: PageContent = {
     description: "AI 幫你寫的週度交易日誌：三個觀察、三個下週問題。",
   },
   hero: {
-    eyebrow: "食譜 03 · 投資組合",
+    eyebrow: "Recipe 03 · 投資組合",
     title: "投資組合回顧",
     description:
       "AI Agent 讀你的模擬持倉，寫一份精煉的週度複盤 — 三個觀察、三個問題、用你的語氣。",
@@ -63,7 +63,7 @@ const zhHK: PageContent = {
   sidebar: {
     title: "詳情",
     rows: [
-      { label: "食譜", value: "03 · 投資組合回顧" },
+      { label: "Recipe", value: "03 · 投資組合回顧" },
       { label: "難度", value: "新手" },
       { label: "上手時間", value: "約 5 分鐘" },
       { label: "市場", value: "美股 · 港股 · 加密" },
@@ -76,7 +76,7 @@ const zhHK: PageContent = {
     primaryCtaHref: "",
   },
   whatItDoes: {
-    title: "這個食譜做什麼",
+    title: "這個 Recipe 做什麼",
     bullets: [
       "讀你的模擬帳戶：餘額、持倉、過去 7 天的所有成交。",
       "算出真正重要的指標 — 勝率、板塊分佈、集中度、週度 NAV 變動。",
@@ -105,7 +105,7 @@ const zhHK: PageContent = {
     intro: "週五晚或週日晚跑，週度視角最乾淨。Longbridge 已裝好就跳到第 3 步。",
     setupLinkLabel: "完整安裝指南",
     setupLinkHref:
-      "https://github.com/coolboylcy/longbridge-agent-cookbook/blob/main/MCP_SETUP.zh-TW.md",
+      "https://open.longbridge.com/skill/install.md",
     steps: [
       {
         title: "把 Longbridge 接到你的 AI 應用",
@@ -113,7 +113,7 @@ const zhHK: PageContent = {
       },
       {
         title: "安裝 Skill",
-        body: "在 Claude Code 裡：/plugin marketplace add longbridge/skills 然後 /plugin install longbridge@longbridge-skills。其他工具：npx skills add longbridge/skills -g。",
+        body: "Claude Code 用戶執行 `/plugin marketplace add longbridge/skills` 然後 `/plugin install longbridge@longbridge-skills`。Codex、OpenClaw、Cursor 等其他工具執行 `npx skills add longbridge/skills -g`（或貼上 ZIP 安裝連結）。Skill 告訴 AI Longbridge 能做什麼。",
       },
       {
         title: "複製下方 Prompt，貼上執行",
@@ -192,16 +192,16 @@ const zhHK: PageContent = {
       },
     ],
   },
-  footer: { backToHub: "← 所有食譜", github: "GitHub ↗" },
+  footer: { backToHub: "← All recipes", github: "GitHub ↗" },
   nav: {
     brand: "Cookbook",
-    allRecipes: "所有食譜",
+    allRecipes: "All recipes",
     links: [
-      { label: "所有食譜", href: "https://longbridge-cookbook-hub.vercel.app/zh-HK" },
-      { label: "安裝", href: "https://github.com/coolboylcy/longbridge-agent-cookbook/blob/main/MCP_SETUP.zh-TW.md" },
-      { label: "GitHub", href: "https://github.com/coolboylcy/longbridge-agent-cookbook" },
+      { label: "All recipes", href: "https://longbridge-cookbook-hub.vercel.app/zh-HK" },
+      { label: "安裝", href: "https://open.longbridge.com/skill/install.md" },
+      { label: "GitHub", href: "https://github.com/longbridge/developers" },
     ],
-    searchPlaceholder: "搜尋食譜⋯",
+    searchPlaceholder: "Search recipes⋯",
     signIn: "Longbridge",
     signInHref: "https://longbridge.com",
   },

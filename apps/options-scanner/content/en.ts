@@ -113,7 +113,7 @@ const en: PageContent = {
     intro: "If you've already set up Longbridge, skip to step 3.",
     setupLinkLabel: "Full setup guide",
     setupLinkHref:
-      "https://github.com/coolboylcy/longbridge-agent-cookbook/blob/main/MCP_SETUP.md",
+      "https://open.longbridge.com/skill/install.md",
     steps: [
       {
         title: "Connect Longbridge to your AI app",
@@ -121,7 +121,7 @@ const en: PageContent = {
       },
       {
         title: "Install the Skill",
-        body: "Inside Claude Code: /plugin marketplace add longbridge/skills then /plugin install longbridge@longbridge-skills. For any other tool: npx skills add longbridge/skills -g. This tells your AI what Longbridge can do.",
+        body: "For Claude Code: run `/plugin marketplace add longbridge/skills` then `/plugin install longbridge@longbridge-skills`. For Codex / OpenClaw / Cursor / any other tool: run `npx skills add longbridge/skills -g` (or paste the ZIP install URL). This tells your AI what Longbridge can do.",
       },
       {
         title: "Copy the prompt below, paste, run",
@@ -212,8 +212,8 @@ const en: PageContent = {
     allRecipes: "All recipes",
     links: [
       { label: "All recipes", href: "https://longbridge-cookbook-hub.vercel.app" },
-      { label: "Setup", href: "https://github.com/coolboylcy/longbridge-agent-cookbook/blob/main/MCP_SETUP.md" },
-      { label: "GitHub", href: "https://github.com/coolboylcy/longbridge-agent-cookbook" },
+      { label: "Setup", href: "https://open.longbridge.com/skill/install.md" },
+      { label: "GitHub", href: "https://github.com/longbridge/developers" },
     ],
     searchPlaceholder: "Search recipes…",
     signIn: "Longbridge",

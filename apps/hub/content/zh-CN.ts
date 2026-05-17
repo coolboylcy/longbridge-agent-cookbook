@@ -1,9 +1,9 @@
 import type { HubContent, RecipeCard } from "./types";
 
 const SETUP_URL =
-  "https://github.com/coolboylcy/longbridge-agent-cookbook/blob/main/MCP_SETUP.zh-CN.md";
+  "https://open.longbridge.com/skill/install.md";
 const ISSUES_URL =
-  "https://github.com/coolboylcy/longbridge-agent-cookbook/issues/new";
+  "https://github.com/longbridge/developers/issues/new";
 
 const RECIPES: RecipeCard[] = [
   {
@@ -468,28 +468,28 @@ const RECIPES: RecipeCard[] = [
 
 const zhCN: HubContent = {
   meta: {
-    title: "Longbridge Agent Cookbook — 给交易者的 AI 食谱库",
+    title: "Longbridge Agent Cookbook — AI recipes for traders",
     description:
-      "可直接运行的 AI Agent 食谱。把 Prompt 粘贴到 Claude Code，你的 Agent 终于看得到你的自选股。不用写代码。",
+      "可直接运行的 AI Agent recipe。粘贴到 Claude Code、Codex、OpenClaw 等任何 AI 工具，你的 Agent 终于看得到你的自选股。不用写代码。",
   },
   nav: {
     brand: "Cookbook",
     links: [
-      { label: "食谱", href: "#recipes" },
+      { label: "Recipes", href: "#recipes" },
       { label: "安装", href: SETUP_URL },
       { label: "常见问题", href: "#faq" },
-      { label: "GitHub", href: "https://github.com/coolboylcy/longbridge-agent-cookbook" },
+      { label: "GitHub", href: "https://github.com/longbridge/developers" },
     ],
-    searchPlaceholder: "搜索食谱⋯",
+    searchPlaceholder: "Search recipes⋯",
     signIn: "Longbridge",
     signInHref: "https://longbridge.com",
   },
   hero: {
-    eyebrow: "开源 · MCP 优先 · 模拟交易",
+    eyebrow: "Open source · 由 Longbridge Skill 驱动 · 模拟交易",
     title: "把券商塞进你的 Agent。",
     description:
-      "为 Longbridge 设计的 AI Agent 食谱。粘进 Claude Code，你的 Agent 立刻有了券商手脚 — 自选股、报价、期权链、持仓、模拟下单。不写代码。",
-    primaryCta: "浏览食谱",
+      "为 Longbridge 设计的 AI Agent recipe。粘进 Claude Code、Codex、OpenClaw、Cursor 或任何 AI 工具，你的 Agent 立刻有了券商手脚 — 自选股、报价、期权链、持仓、模拟下单。不写代码。",
+    primaryCta: "浏览 Recipes",
     primaryCtaHref: "#recipes",
     secondaryCta: "安装指南",
     secondaryCtaHref: SETUP_URL,
@@ -507,7 +507,7 @@ const zhCN: HubContent = {
     statusLabels: { live: "上线", comingSoon: "即将推出" },
   },
   recipesSection: {
-    title: "食谱",
+    title: "Recipes",
     countLabel: `共 ${RECIPES.length} 个 · ${RECIPES.filter((r) => r.status === "live").length} 个上线 · ${RECIPES.filter((r) => r.status === "coming-soon").length} 个即将推出`,
   },
   recipes: RECIPES,
@@ -524,30 +524,34 @@ const zhCN: HubContent = {
     items: [
       {
         q: "我需要会写代码吗？",
-        a: "不用。一次性编辑一个配置文件（纯复制粘贴），之后全部都是聊天。食谱就是 Prompt — 你只需要复制到 AI 应用。",
+        a: "不用。一次性编辑一个配置文件（纯复制粘贴），之后全部都是聊天。Recipe 就是 Prompt — 你只需要复制到 AI 应用。",
+      },
+      {
+        q: "支持哪些 AI 工具？",
+        a: "Longbridge Skill 适配绝大多数 AI Agent：Claude Code、Codex（Work locally 模式）、OpenClaw、Cursor、Claude Desktop（Code 标签）、Zed、Gemini CLI、Warp，以及任何支持 MCP 的客户端。",
       },
       {
         q: "安全吗？会不会帮我下实单？",
-        a: "默认是模拟交易。食谱本身不会下单 — 只是读数据、写报告。我们刻意对实盘交易设了门槛。",
+        a: "默认是模拟交易。Recipe 本身不会下单 — 只是读数据、写报告。我们刻意对实盘交易设了门槛。",
       },
       {
         q: "要钱吗？",
         a: "Longbridge 免费注册。你只付 AI 应用本身的钱（Claude Pro、Cursor 等）— 跟你用任何 Agent 一样。",
       },
       {
-        q: "为什么要 MCP / Skill？我直接问 Claude 不行吗？",
-        a: "没有 Longbridge Skill，Claude 看不到你真实的自选股、持仓、实时报价 — 它只能瞎编。Skill 给 Agent 真正的券商手脚。",
+        q: "为什么要 Skill？我直接问 AI 不行吗？",
+        a: "没有 Longbridge Skill，AI 看不到你真实的自选股、持仓、实时报价 — 它只能瞎编。Skill 给 Agent 真正的券商手脚。",
       },
       {
         q: "为什么安装要分两步？",
         a: "第一步（CLI 或 MCP）让 AI 有权限调用 Longbridge。第二步（Skill）告诉 AI Longbridge 能做什么。少了第二步，AI 可能根本不知道 Longbridge 可用。",
       },
       {
-        q: "Claude Desktop 连不上。",
-        a: "切到 Claude Desktop 的 Code 标签。Chat 和 Cowork 模式因网络白名单会阻塞 CLI 安装和 MCP 连接。Code 标签是内嵌的 Claude Code，有完整终端权限。",
+        q: "Claude Desktop / Codex 连不上。",
+        a: "Claude Desktop 切到 Code 标签；Codex 新建会话时选 Work locally。Chat / Cowork / Cloud 模式因网络白名单会阻塞 CLI 安装和 MCP 连接 — 它们是沙盒环境。",
       },
       {
-        q: "我可以贡献食谱吗？",
+        q: "我可以贡献新的 Recipe 吗？",
         a: "欢迎。在 GitHub 提 Issue 或读 CONTRIBUTING.md。门槛很低：有用的 Prompt + 清楚的说明。",
       },
     ],

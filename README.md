@@ -118,7 +118,7 @@ Open any [recipe](#recipes) page, copy the prompt, paste into Claude (or click *
 | 02  | [Options Scanner](recipes/02_options_scanner)   | **AI agent options scanner** for high-IV-rank covered calls on your watchlist.      | [live](https://options-scanner-three.vercel.app)   |
 | 03  | [Portfolio Review](recipes/03_portfolio_review) | Agent ingests your paper positions; writes a weekly review with 3 observations + 3 Qs. | [live](https://portfolio-review-three.vercel.app)  |
 
-More coming. Have a recipe idea? [Open an issue](https://github.com/coolboylcy/longbridge-agent-cookbook/issues/new) or read [CONTRIBUTING.md](CONTRIBUTING.md).
+More coming. Have a recipe idea? [Open an issue](https://github.com/longbridge/developers/issues/new) or read [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 

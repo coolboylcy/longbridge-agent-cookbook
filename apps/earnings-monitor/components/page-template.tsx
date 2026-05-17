@@ -301,7 +301,7 @@ export function PageTemplate({
                 <span>{c.footer.backToHub}</span>
               </a>
               <a
-                href="https://github.com/coolboylcy/longbridge-agent-cookbook"
+                href="https://github.com/longbridge/developers"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-3 flex items-center justify-between text-[var(--color-lb-text-dim)] transition-colors hover:text-[var(--color-lb-text)]"

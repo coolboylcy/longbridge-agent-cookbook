@@ -2,7 +2,7 @@
 
 # longbridge-agent-cookbook
 
-> 可直接运行的 AI Agent 食谱，专为 **Longbridge Skill / MCP** 设计。粘贴到 Claude Code、Cursor 或 Codex，你的 Agent 立刻获得券商操盘能力。
+> 可直接运行的 AI Agent Recipe，专为 **Longbridge Skill / MCP** 设计。粘贴到 Claude Code、Cursor 或 Codex，你的 Agent 立刻获得券商操盘能力。
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![仅限模拟交易](https://img.shields.io/badge/模式-模拟交易-blue.svg)](#合规与安全)
@@ -11,11 +11,11 @@
 
 ---
 
-## 这是什么 — Longbridge MCP 食谱库
+## 这是什么 — Longbridge Agent Cookbook
 
-**Longbridge MCP** 是让 AI Agent 获得真实券商能力的最快方式：行情报价、自选股列表、期权链、账户状态、模拟下单。本仓库是一批精选的小型、可运行的 **Agent 食谱**，可接入任何支持 MCP 的客户端 — Claude Desktop、Claude Code、Cursor、Codex，或你自己的工具。
+**Longbridge MCP** 是让 AI Agent 获得真实券商能力的最快方式：行情报价、自选股列表、期权链、账户状态、模拟下单。本仓库是一批精选的小型、可运行的 **Agent Recipe**，可接入任何支持 MCP 的客户端 — Claude Desktop、Claude Code、Cursor、Codex，或你自己的工具。
 
-每个食谱都具备：
+每个 Recipe 都具备：
 
 - **MCP 优先** — 主要执行路径是"把 Prompt 粘贴到 Claude，看 Agent 调用 Longbridge 工具"。无需 Python 即可运行。
 - **默认模拟交易** — `TRADING_MODE=paper`，非模拟模式会主动报错。
@@ -96,9 +96,9 @@ npx skills add longbridge/skills -g
 
 也可以下载 <https://open.longbridge.com/skill/longbridge-all.zip>，放进 AI 工具的 Skill 目录。
 
-### 第三步 — 试一个食谱 Prompt
+### 第三步 — 试一个 Recipe Prompt
 
-打开任意 [食谱](#食谱) 页面，复制 Prompt 贴到 Claude（或点 **Open in Claude**）。Agent 会调用 Longbridge 工具并生成 Markdown 报告。整个循环就这么简单。
+打开任意 [Recipe](#recipes) 页面，复制 Prompt 贴到 Claude（或点 **Open in Claude**）。Agent 会调用 Longbridge 工具并生成 Markdown 报告。整个循环就这么简单。
 
 > 不用 Python。不用 clone。不用配 SDK。
 
@@ -110,15 +110,15 @@ npx skills add longbridge/skills -g
 
 ---
 
-## 食谱
+## Recipes
 
-| #   | 食谱                                              | 功能说明                                                                          | 状态        |
+| #   | Recipe                                              | 功能说明                                                                          | 状态        |
 | --- | ------------------------------------------------- | --------------------------------------------------------------------------------- | ----------- |
 | 01  | [财报监控](recipes/01_earnings_monitor)           | Agent 监控自选股即将到来的财报；提前 24 小时预报 + 财报后 1 小时复盘。            | [上线](https://earnings-monitor-ochre.vercel.app)  |
 | 02  | [期权扫描器](recipes/02_options_scanner)          | **AI Agent 期权扫描器**，筛选自选股中 IV Rank 较高的备兑看涨期权机会。            | [上线](https://options-scanner-three.vercel.app)   |
 | 03  | [投资组合回顾](recipes/03_portfolio_review)       | Agent 读取模拟持仓，生成含 3 个核心观察点和 3 个跟进问题的周度复盘报告。          | [上线](https://portfolio-review-three.vercel.app)  |
 
-更多食谱持续更新中。有想法？[提 Issue](https://github.com/coolboylcy/longbridge-agent-cookbook/issues/new) 或阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
+更多 Recipe 持续更新中。有想法？[提 Issue](https://github.com/longbridge/developers/issues/new) 或阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ---
 
@@ -154,10 +154,10 @@ Agent（Claude / Cursor / Codex）主导驱动。MCP 是通信总线。Longbridg
                         ────  headless/CI 备用路径  ────
 
   Python SDK ─────► Longbridge OpenAPI
-  （用于定时任务、GitHub Actions、Lambda 等无 Agent 场景 — 参见各食谱 main.py）
+  （用于定时任务、GitHub Actions、Lambda 等无 Agent 场景 — 参见各 Recipe 的 main.py）
 ```
 
-**主路径（推荐）：** Agent → MCP → Skill。每个食谱 README 均以此为起点。
+**主路径（推荐）：** Agent → MCP → Skill。每个 Recipe README 均以此为起点。
 
 **备用路径（headless）：** `recipes/NN/main.py` 直接调用 Longbridge Python SDK。适用于需要定时运行、CI 或无 Chat Agent 的场景。输出相同，驱动方式不同。
 
@@ -177,24 +177,24 @@ if os.getenv("TRADING_MODE", "paper") != "paper":
 
 - **代码中不得含有凭据。** 请使用 `.env`（已加入 .gitignore）、Shell 环境变量或 MCP 客户端的密钥存储。
 - **未经明确修改，不得发送实盘订单。** 一旦切换为实盘模式，所有订单风险由你自行承担。
-- **不构成投资建议。** 本仓库中的食谱均未经投资专业人士审核，仅为工程示例。
+- **不构成投资建议。** 本仓库中的 Recipe均未经投资专业人士审核，仅为工程示例。
 - **地区限制适用。** Longbridge 在港股、新加坡、美国受监管。连接真实账户前请确认你所在司法管辖区的规定。
 - **请遵守速率限制。** SDK 和 MCP Server 均会暴露限速信息，请合理使用 API。
 
-如发现安全问题（食谱中泄露 Token、不安全默认配置），请直接发邮件给我，而非公开提 Issue。
+如发现安全问题（Recipe 中泄露 Token、不安全默认配置），请直接发邮件给我，而非公开提 Issue。
 
 ---
 
 ## FAQ
 
 **Q：我需要克隆这个仓库吗？**
-MCP 优先路径下不需要。将 MCP Server 安装到 Agent，在 GitHub 上复制任意食谱 README 中的 Prompt，粘贴运行即可。仅在需要 headless `main.py` 备用脚本时才需要克隆。
+MCP 优先路径下不需要。将 MCP Server 安装到 Agent，在 GitHub 上复制任意 Recipe README 中的 Prompt，粘贴运行即可。仅在需要 headless `main.py` 备用脚本时才需要克隆。
 
 **Q：支持哪些 MCP 客户端？**
 所有支持 MCP 协议的客户端均可。已测试：Claude Desktop、Claude Code、Cursor、Codex。[`MCP_SETUP.md`](MCP_SETUP.md) 中的通用 JSON 配置覆盖其他客户端。
 
 **Q：什么情况下应使用 Python SDK 备用路径？**
-需要 headless 执行时：GitHub Actions、定时任务、Lambda，以及任何无 Chat Agent 参与的场景。各食谱中的 `main.py` 文件就是这条路径。
+需要 headless 执行时：GitHub Actions、定时任务、Lambda，以及任何无 Chat Agent 参与的场景。各 Recipe 中的 `main.py` 文件就是这条路径。
 
 **Q：为什么备用脚本使用 Python？**
 Longbridge 提供 7 种 SDK（Python、Go、Rust、Node、C#、Java、C++）。Python 是 AI / 量化爱好者的通用语言。欢迎提 PR 将备用脚本移植到其他语言。
@@ -207,15 +207,15 @@ Longbridge 提供 7 种 SDK（Python、Go、Rust、Node、C#、Java、C++）。P
 
 ---
 
-## 如何贡献食谱
+## 如何贡献 Recipe
 
 简要步骤：
 
 1. Fork 本仓库。
-2. 将 `recipes/_template/` 复制为 `recipes/NN_你的食谱名/`。
-3. 优先撰写 **Prompt** — README 中的 MCP 优先快速上手部分即是食谱本身。
+2. 将 `recipes/_template/` 复制为 `recipes/NN_你的 recipe 名/`。
+3. 优先撰写 **Prompt** — README 中的 MCP 优先快速上手部分即是 Recipe 本身。
 4. 可选：添加 `main.py` 用于 headless 执行。保持在约 200 行以内，并在开头加入安全守卫代码。
-5. 在上方食谱表格中添加一行。
+5. 在上方 Recipe 表格中添加一行。
 6. 提交 PR。
 
 完整指南：[CONTRIBUTING.md](CONTRIBUTING.md)。
