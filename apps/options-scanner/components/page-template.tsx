@@ -4,6 +4,7 @@ import { PromptCard } from "./ui/prompt-card";
 import { WalkthroughStep } from "./ui/walkthrough-step";
 import { Tag } from "./ui/tag";
 import { RecipeThumbnail } from "./ui/thumbnails";
+import { OpenInClaudeButton } from "./ui/open-in-claude";
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -33,7 +34,6 @@ export function PageTemplate({
   void flowOutputLabel;
 
   const c = content;
-  const claudeUrl = `https://claude.ai/new?q=${encodeURIComponent(c.prompt.body)}`;
 
   return (
     <div>
@@ -79,14 +79,11 @@ export function PageTemplate({
                 ))}
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href={claudeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-md bg-[var(--color-lb-green)] px-4 py-2.5 text-sm font-bold text-[var(--color-lb-bg)] transition-colors hover:bg-[var(--color-lb-green-dim)]"
-                >
-                  {c.sidebar.primaryCta} ↗
-                </a>
+                <OpenInClaudeButton
+                  prompt={c.prompt.body}
+                  label={c.sidebar.primaryCta}
+                  copiedLabel={c.prompt.copied}
+                />
                 <a
                   href={c.howToRun.setupLinkHref}
                   target="_blank"
@@ -282,14 +279,13 @@ export function PageTemplate({
                   </div>
                 ))}
               </dl>
-              <a
-                href={claudeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-5 flex items-center justify-center gap-2 rounded-md bg-[var(--color-lb-green)] px-3 py-2.5 text-sm font-bold text-[var(--color-lb-bg)] transition-colors hover:bg-[var(--color-lb-green-dim)]"
-              >
-                {c.sidebar.primaryCta} ↗
-              </a>
+              <OpenInClaudeButton
+                prompt={c.prompt.body}
+                label={c.sidebar.primaryCta}
+                copiedLabel={c.prompt.copied}
+                variant="block"
+                className="mt-5 w-full"
+              />
             </div>
 
             {/* Footer links in sidebar bottom */}

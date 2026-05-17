@@ -1,6 +1,9 @@
-import type { HubContent, Locale } from "../content/types";
+"use client";
+import { useState, useMemo } from "react";
+import type { HubContent, Locale, RecipeCategory } from "../content/types";
 import { SiteNav } from "./ui/site-nav";
 import { RecipeCard } from "./ui/recipe-card";
+import { cn } from "./ui/utils";
 
 function SectionTitle({
   children,
@@ -29,6 +32,15 @@ export function HubTemplate({
   content: HubContent;
 }) {
   const c = content;
+  const [activeFilter, setActiveFilter] = useState<RecipeCategory | "all">(
+    "all"
+  );
+
+  const filteredRecipes = useMemo(() => {
+    if (activeFilter === "all") return c.recipes;
+    return c.recipes.filter((r) => r.category === activeFilter);
+  }, [activeFilter, c.recipes]);
+
   return (
     <div>
       <SiteNav
@@ -40,7 +52,7 @@ export function HubTemplate({
         signInHref={c.nav.signInHref}
       />
 
-      {/* Hero — civitai-style: dense, vivid, full-width */}
+      {/* Hero */}
       <section className="relative overflow-hidden border-b border-[var(--color-lb-border)]">
         <div
           aria-hidden="true"
@@ -83,7 +95,7 @@ export function HubTemplate({
       </section>
 
       <div className="mx-auto max-w-7xl px-4 lg:px-6">
-        {/* Setup banner — sticky-looking ribbon */}
+        {/* Setup banner */}
         <a
           href={c.setupBanner.primaryHref}
           target="_blank"
@@ -119,30 +131,39 @@ export function HubTemplate({
 
         {/* Recipes grid */}
         <section id="recipes" className="mt-12 scroll-mt-20">
-          <SectionTitle count={c.recipesSection.countLabel(c.recipes.length)}>
+          <SectionTitle count={c.recipesSection.countLabel}>
             {c.recipesSection.title}
           </SectionTitle>
 
-          {/* Filter chip row (visual placeholder — chips are decorative for now) */}
+          {/* Filter chips (functional) */}
           <div className="mb-6 -mx-1 flex gap-1.5 overflow-x-auto px-1 pb-1">
-            {c.filterBar.filters.map((f, i) => (
-              <button
-                key={f.value}
-                type="button"
-                className={
-                  i === 0
-                    ? "shrink-0 rounded-full bg-[var(--color-lb-green-soft)] px-3 py-1.5 text-xs font-semibold text-[var(--color-lb-green)]"
-                    : "shrink-0 rounded-full border border-[var(--color-lb-border)] bg-[var(--color-lb-surface)] px-3 py-1.5 text-xs font-medium text-[var(--color-lb-muted)] transition-colors hover:border-[var(--color-lb-border-strong)] hover:text-[var(--color-lb-text)]"
-                }
-              >
-                {f.label}
-              </button>
-            ))}
+            {c.filterBar.filters.map((f) => {
+              const active = activeFilter === f.value;
+              return (
+                <button
+                  key={f.value}
+                  type="button"
+                  onClick={() => setActiveFilter(f.value)}
+                  className={cn(
+                    "shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors",
+                    active
+                      ? "bg-[var(--color-lb-green-soft)] text-[var(--color-lb-green)]"
+                      : "border border-[var(--color-lb-border)] bg-[var(--color-lb-surface)] text-[var(--color-lb-muted)] hover:border-[var(--color-lb-border-strong)] hover:text-[var(--color-lb-text)]"
+                  )}
+                >
+                  {f.label}
+                </button>
+              );
+            })}
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {c.recipes.map((r) => (
-              <RecipeCard key={r.slug} recipe={r} />
+            {filteredRecipes.map((r) => (
+              <RecipeCard
+                key={r.slug}
+                recipe={r}
+                comingSoonLabel={c.filterBar.statusLabels.comingSoon}
+              />
             ))}
           </div>
         </section>

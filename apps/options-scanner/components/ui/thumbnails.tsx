@@ -281,10 +281,97 @@ export function PortfolioThumbnail({ className }: { className?: string | undefin
   );
 }
 
+export function ScannerThumbnail({
+  className,
+}: {
+  className?: string | undefined;
+}) {
+  const tickers = [
+    { t: "NVDA", c: "+5.2%", up: true, vol: 92 },
+    { t: "AAPL", c: "+2.1%", up: true, vol: 64 },
+    { t: "TSLA", c: "-3.4%", up: false, vol: 78 },
+    { t: "MSFT", c: "+1.5%", up: true, vol: 50 },
+    { t: "META", c: "+4.7%", up: true, vol: 85 },
+    { t: "AMZN", c: "-1.2%", up: false, vol: 45 },
+    { t: "GOOG", c: "+0.8%", up: true, vol: 38 },
+  ];
+  return (
+    <svg
+      viewBox="0 0 480 270"
+      className={className}
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="sc-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#1f2128" />
+          <stop offset="1" stopColor="#16181d" />
+        </linearGradient>
+      </defs>
+      <rect width="480" height="270" fill="url(#sc-bg)" />
+      <rect x="0" y="0" width="480" height="28" fill="#2a2d35" />
+      <circle cx="14" cy="14" r="4" fill="#ff6b6b" opacity="0.55" />
+      <circle cx="28" cy="14" r="4" fill="#ffd43b" opacity="0.55" />
+      <circle cx="42" cy="14" r="4" fill="#00C896" opacity="0.55" />
+      <text x="58" y="18" fontFamily="ui-monospace" fontSize="10" fill="#8a8f9b">
+        scanner.md
+      </text>
+
+      <text x="24" y="58" fontFamily="ui-sans-serif" fontSize="13" fontWeight="700" fill="#f0f1f3">
+        Market scanner · top movers
+      </text>
+
+      <text x="24" y="84" fontFamily="ui-monospace" fontSize="9" fill="#8a8f9b" letterSpacing="0.6">
+        TICKER
+      </text>
+      <text x="140" y="84" fontFamily="ui-monospace" fontSize="9" fill="#8a8f9b" letterSpacing="0.6">
+        VOL RANK
+      </text>
+      <text x="448" y="84" fontFamily="ui-monospace" fontSize="9" fill="#8a8f9b" letterSpacing="0.6" textAnchor="end">
+        Δ %
+      </text>
+      <line x1="24" y1="92" x2="456" y2="92" stroke="#2e313a" />
+
+      {tickers.map((r, i) => {
+        const y = 110 + i * 22;
+        return (
+          <g key={r.t}>
+            <text x="24" y={y} fontFamily="ui-sans-serif" fontSize="11" fontWeight="600" fill="#f0f1f3">
+              {r.t}
+            </text>
+            <rect x="140" y={y - 7} width="160" height="5" rx="2.5" fill="#2a2d35" />
+            <rect
+              x="140"
+              y={y - 7}
+              width={(160 * r.vol) / 100}
+              height="5"
+              rx="2.5"
+              fill={r.up ? "#00C896" : "#ff6b6b"}
+              opacity="0.8"
+            />
+            <text
+              x="448"
+              y={y}
+              fontFamily="ui-monospace"
+              fontSize="11"
+              fontWeight="600"
+              fill={r.up ? "#00C896" : "#ff6b6b"}
+              textAnchor="end"
+            >
+              {r.c}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
 const map = {
   earnings: EarningsThumbnail,
   options: OptionsThumbnail,
   portfolio: PortfolioThumbnail,
+  scanner: ScannerThumbnail,
 } as const;
 
 export type ThumbnailKey = keyof typeof map;

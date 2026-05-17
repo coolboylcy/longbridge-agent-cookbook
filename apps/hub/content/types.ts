@@ -11,7 +11,16 @@ export type TagColor =
   | "red"
   | "neutral";
 
-export type ThumbnailKey = "earnings" | "options" | "portfolio";
+export type ThumbnailKey = "earnings" | "options" | "portfolio" | "scanner";
+
+export type RecipeStatus = "live" | "coming-soon";
+
+export type RecipeCategory =
+  | "events"
+  | "options"
+  | "portfolio"
+  | "scanner"
+  | "tools";
 
 export interface Tag {
   label: string;
@@ -26,6 +35,8 @@ export interface RecipeCard {
   thumbnail: ThumbnailKey;
   tags: Tag[];
   meta: string; // e.g. "Recipe 01 · 5 min"
+  status: RecipeStatus;
+  category: RecipeCategory;
 }
 
 export interface FaqItem {
@@ -53,11 +64,12 @@ export interface HubContent {
   };
   filterBar: {
     sortLabel: string;
-    filters: { label: string; value: string }[];
+    filters: { label: string; value: RecipeCategory | "all" }[];
+    statusLabels: { live: string; comingSoon: string };
   };
   recipesSection: {
     title: string;
-    countLabel: (n: number) => string;
+    countLabel: string;
   };
   recipes: RecipeCard[];
   setupBanner: {
