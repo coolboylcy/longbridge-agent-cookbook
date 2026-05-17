@@ -487,7 +487,7 @@ const zhHK: HubContent = {
     ],
     searchPlaceholder: "Search recipes⋯",
     signIn: "Longbridge",
-    signInHref: "https://longbridge.com",
+    signInHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
   },
   hero: {
     eyebrow: "Open source · 由 Longbridge Skill 驅動 · 模擬交易",
@@ -541,7 +541,7 @@ const zhHK: HubContent = {
       },
       {
         q: "要錢嗎？",
-        a: "Longbridge 免費註冊。你只付 AI 應用本身的錢（Claude Pro、Cursor 等）— 跟你用任何 Agent 一樣。",
+        a: "Longbridge [免費註冊](https://open.longbridge.com/skill?invite-code=F6HEGJ)。你只付 AI 應用本身的錢（Claude Pro、Cursor 等）— 跟你用任何 Agent 一樣。",
       },
       {
         q: "為什麼要 Skill？我直接問 AI 不行嗎？",

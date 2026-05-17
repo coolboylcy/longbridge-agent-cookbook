@@ -488,7 +488,7 @@ const en: HubContent = {
     ],
     searchPlaceholder: "Search recipes…",
     signIn: "Longbridge",
-    signInHref: "https://longbridge.com",
+    signInHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
   },
   hero: {
     eyebrow: "Open source · MCP-first · Paper trading",
@@ -538,7 +538,7 @@ const en: HubContent = {
       },
       {
         q: "Does it cost anything?",
-        a: "Longbridge is free to sign up. You pay for your AI app (Claude Pro, Cursor, etc.) — same as you'd pay for any agent.",
+        a: "Longbridge is [free to sign up](https://open.longbridge.com/skill?invite-code=F6HEGJ). You pay for your AI app (Claude Pro, Cursor, etc.) — same as you'd pay for any agent.",
       },
       {
         q: "Why MCP / Skill instead of just asking Claude directly?",

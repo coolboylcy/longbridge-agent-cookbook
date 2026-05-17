@@ -94,7 +94,7 @@ const en: PageContent = {
       {
         label: "A Longbridge account with options enabled",
         detail:
-          "Free to sign up at longbridge.com. Paper-trading account works — no real money required.",
+          "Free to [sign up](https://open.longbridge.com/skill?invite-code=F6HEGJ) (paper-trading account works — no real money required).",
       },
       {
         label: "Basic options literacy",
@@ -217,7 +217,7 @@ const en: PageContent = {
     ],
     searchPlaceholder: "Search recipes…",
     signIn: "Longbridge",
-    signInHref: "https://longbridge.com",
+    signInHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
   },
 };
 

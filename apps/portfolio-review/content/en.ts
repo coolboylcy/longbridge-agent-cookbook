@@ -90,7 +90,7 @@ const en: PageContent = {
       {
         label: "A Longbridge paper-trading account",
         detail:
-          "Free to sign up. Paper account preferred — that's what the prompt expects.",
+          "[Free to sign up](https://open.longbridge.com/skill?invite-code=F6HEGJ). Paper account preferred — that's what the prompt expects.",
       },
       {
         label: "Some trading history in the past week",
@@ -212,7 +212,7 @@ const en: PageContent = {
     ],
     searchPlaceholder: "Search recipes…",
     signIn: "Longbridge",
-    signInHref: "https://longbridge.com",
+    signInHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
   },
 };
 

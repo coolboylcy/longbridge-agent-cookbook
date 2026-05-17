@@ -85,7 +85,7 @@ longbridge init F6HEGJ
 
 > 中國大陸使用者使用加速端點：`https://openapi.longbridge.cn/mcp`
 
-首次呼叫工具時瀏覽器自動打開 OAuth 登入。模擬交易帳戶走同一流程。在 [open.longbridge.com](https://open.longbridge.com) 註冊或登入。
+首次呼叫工具時瀏覽器自動打開 OAuth 登入。模擬交易帳戶走同一流程。透過 [Chris 的邀請連結註冊](https://open.longbridge.com/skill?invite-code=F6HEGJ)。
 
 ### 第二步 — 安裝 Skill
 
@@ -209,7 +209,7 @@ Longbridge 提供 7 種 SDK（Python、Go、Rust、Node、C#、Java、C++）。P
 技術上可以，但本倉庫對這條路徑刻意設置了障礙。如果你這樣做，所有發出的訂單後果由你自負。
 
 **Q：如何註冊 Longbridge 帳戶？**
-港股 / 新加坡居民：[longbridge.com](https://longbridge.com)。註冊後前往 [open.longbridge.com](https://open.longbridge.com) 開發者平台，沙盒環境自動開通。MCP 使用 OAuth 2.1 認證，無需手動取得 Token。Python SDK 備用路徑仍需使用開發者平台的 `app_key` / `app_secret` / `access_token`。
+港股 / 新加坡居民：透過 [Chris 的邀請連結註冊](https://open.longbridge.com/skill?invite-code=F6HEGJ)。註冊後前往 [open.longbridge.com](https://open.longbridge.com) 開發者平台，沙盒環境自動開通。MCP 使用 OAuth 2.1 認證，無需手動取得 Token。Python SDK 備用路徑仍需使用開發者平台的 `app_key` / `app_secret` / `access_token`。
 
 ---
 

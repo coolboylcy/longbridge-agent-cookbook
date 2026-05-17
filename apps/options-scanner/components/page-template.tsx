@@ -5,6 +5,7 @@ import { WalkthroughStep } from "./ui/walkthrough-step";
 import { Tag } from "./ui/tag";
 import { RecipeThumbnail } from "./ui/thumbnails";
 import { OpenInClaudeButton } from "./ui/open-in-claude";
+import { RichText } from "./ui/rich-text";
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -132,7 +133,7 @@ export function PageTemplate({
                       {item.label}
                     </div>
                     <div className="mt-1 text-sm leading-relaxed text-[var(--color-lb-muted)]">
-                      {item.detail}
+                      <RichText text={item.detail} />
                     </div>
                   </li>
                 ))}
@@ -168,7 +169,7 @@ export function PageTemplate({
                         {s.title}
                       </div>
                       <div className="mt-1.5 text-sm leading-relaxed text-[var(--color-lb-muted)]">
-                        {s.body}
+                        <RichText text={s.body} />
                       </div>
                     </div>
                   </li>
@@ -250,7 +251,7 @@ export function PageTemplate({
                       {item.label}
                     </div>
                     <div className="mt-1 text-sm leading-relaxed text-[var(--color-lb-muted)]">
-                      {item.detail}
+                      <RichText text={item.detail} />
                     </div>
                   </li>
                 ))}

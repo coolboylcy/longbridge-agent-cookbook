@@ -88,7 +88,7 @@ const zhCN: PageContent = {
     items: [
       {
         label: "Longbridge 模拟交易账户",
-        detail: "免费注册。模拟账户就好 — Prompt 预期是模拟。",
+        detail: "[免费注册](https://open.longbridge.com/skill?invite-code=F6HEGJ)。模拟账户就好 — Prompt 预期是模拟。",
       },
       {
         label: "过去一周有一些交易记录",
@@ -203,7 +203,7 @@ const zhCN: PageContent = {
     ],
     searchPlaceholder: "Search recipes⋯",
     signIn: "Longbridge",
-    signInHref: "https://longbridge.com",
+    signInHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
   },
 };
 

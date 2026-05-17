@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import type { HubContent, Locale, RecipeCategory } from "../content/types";
 import { SiteNav } from "./ui/site-nav";
 import { RecipeCard } from "./ui/recipe-card";
+import { RichText } from "./ui/rich-text";
 import { cn } from "./ui/utils";
 
 function SectionTitle({
@@ -181,7 +182,7 @@ export function HubTemplate({
                   {item.q}
                 </div>
                 <div className="mt-2 text-sm leading-relaxed text-[var(--color-lb-muted)]">
-                  {item.a}
+                  <RichText text={item.a} />
                 </div>
               </div>
             ))}

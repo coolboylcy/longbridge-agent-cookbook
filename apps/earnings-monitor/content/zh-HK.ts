@@ -95,7 +95,7 @@ const zhHK: PageContent = {
       {
         label: "一個 Longbridge 帳戶",
         detail:
-          "免費註冊（longbridge.com）。模擬交易帳戶即可 — 不需要真金實銀。",
+          "[免費註冊](https://open.longbridge.com/skill?invite-code=F6HEGJ)。模擬交易帳戶即可 — 不需要真金實銀。",
       },
       {
         label: "一個 AI 對話應用（Claude / Cursor 等）",
@@ -220,7 +220,7 @@ const zhHK: PageContent = {
     ],
     searchPlaceholder: "Search recipes⋯",
     signIn: "Longbridge",
-    signInHref: "https://longbridge.com",
+    signInHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
   },
 };
 
