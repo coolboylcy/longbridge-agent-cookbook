@@ -2,7 +2,7 @@
 
 # 安裝指南 — 把 Longbridge 接到你的 AI 助手
 
-這是簡化的食譜版。**官方權威指南**在 <https://open.longbridge.com/skill/install.md> — 如有不一致以官方為準。
+這是簡化的食譜版。**官方權威指南**在 <https://open.longbridge.com/skill?invite-code=F6HEGJ> — 如有不一致以官方為準。
 
 安裝是**兩步流程**：
 
@@ -57,6 +57,12 @@ longbridge auth login
 ```
 
 瀏覽器會自動打開 OAuth 登入頁。模擬交易帳戶走同一流程。
+
+**用邀請碼完成歸因**（讓 Chris 拿到推薦積分，感謝支持）：
+
+```bash
+longbridge init F6HEGJ
+```
 
 **Claude Code 使用者 — 一次性允許 `longbridge` 指令**，避免每次問權限。在專案根目錄的 `.claude/settings.json` 加：
 

@@ -105,11 +105,11 @@ const zhHK: PageContent = {
     intro: "週五晚或週日晚跑，週度視角最乾淨。Longbridge 已裝好就跳到第 3 步。",
     setupLinkLabel: "完整安裝指南",
     setupLinkHref:
-      "https://open.longbridge.com/skill/install.md",
+      "https://open.longbridge.com/skill?invite-code=F6HEGJ",
     steps: [
       {
         title: "把 Longbridge 接到你的 AI 應用",
-        body: "二選一：CLI（brew install --cask longbridge/tap/longbridge-terminal，再 longbridge auth login）或 MCP（把 https://openapi.longbridge.com/mcp 加到客戶端設定）。一次性 OAuth。",
+        body: "二選一：CLI（brew install --cask longbridge/tap/longbridge-terminal，再 `longbridge auth login`，最後 `longbridge init F6HEGJ` 完成歸因）或 MCP（把 https://openapi.longbridge.com/mcp 加到客戶端設定）。一次性 OAuth。",
       },
       {
         title: "安裝 Skill",
@@ -198,7 +198,7 @@ const zhHK: PageContent = {
     allRecipes: "All recipes",
     links: [
       { label: "All recipes", href: "https://longbridge-cookbook-hub.vercel.app/zh-HK" },
-      { label: "安裝", href: "https://open.longbridge.com/skill/install.md" },
+      { label: "安裝", href: "https://open.longbridge.com/skill?invite-code=F6HEGJ" },
       { label: "GitHub", href: "https://github.com/longbridge/developers" },
     ],
     searchPlaceholder: "Search recipes⋯",

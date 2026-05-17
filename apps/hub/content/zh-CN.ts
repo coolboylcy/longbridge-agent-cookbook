@@ -1,7 +1,7 @@
 import type { HubContent, RecipeCard } from "./types";
 
 const SETUP_URL =
-  "https://open.longbridge.com/skill/install.md";
+  "https://open.longbridge.com/skill?invite-code=F6HEGJ";
 const ISSUES_URL =
   "https://github.com/longbridge/developers/issues/new";
 
@@ -517,7 +517,7 @@ const zhCN: HubContent = {
     primary: "安装指南 ↗",
     primaryHref: SETUP_URL,
     secondary: "官方文档 ↗",
-    secondaryHref: "https://open.longbridge.com/skill/install.md",
+    secondaryHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
   },
   faq: {
     title: "常见问题",
@@ -562,8 +562,9 @@ const zhCN: HubContent = {
     disclaimer: "个人项目。观点仅代表个人，与雇主无关。不构成投资建议。",
     links: [
       { label: "X / Twitter", href: "https://x.com/chrisaiquant" },
-      { label: "Substack", href: "https://chrisliang.substack.com" },
-      { label: "GitHub", href: "https://github.com/chrisaiquant" },
+      { label: "Substack", href: "https://chrisaiquant.substack.com" },
+      { label: "WhatsApp", href: "https://wa.me/85266944195" },
+      { label: "GitHub", href: "https://github.com/coolboylcy" },
     ],
   },
 };

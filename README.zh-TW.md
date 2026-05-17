@@ -37,7 +37,7 @@
 
 ## 5 分鐘快速上手
 
-安裝是**兩步流程** — 與 [Longbridge 官方指南](https://open.longbridge.com/skill/install.md) 一致：
+安裝是**兩步流程** — 與 [Longbridge 官方指南](https://open.longbridge.com/skill?invite-code=F6HEGJ) 一致：
 
 1. **連接** AI 工具到 Longbridge 平台 — CLI（推薦）或 MCP 二選一
 2. **安裝 Skill** — 一組指令檔案，告訴 AI Longbridge 能做什麼
@@ -63,6 +63,12 @@ iwr https://open.longbridge.com/longbridge/longbridge-terminal/install.ps1 | iex
 
 ```bash
 longbridge auth login
+```
+
+用邀請碼完成歸因（讓 Chris 拿到推薦積分，感謝支持）：
+
+```bash
+longbridge init F6HEGJ
 ```
 
 **方法 B — MCP。** 支援 Claude Desktop、Cursor、Zed、Gemini CLI、Warp。在客戶端的 MCP 設定加：

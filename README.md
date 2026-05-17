@@ -37,7 +37,7 @@ This is **not** a trading framework, a backtester, or investment advice. It's a 
 
 ## 5-minute quickstart
 
-Setup is a **two-step process** — same as the [official Longbridge guide](https://open.longbridge.com/skill/install.md):
+Setup is a **two-step process** — same as the [official Longbridge guide](https://open.longbridge.com/skill?invite-code=F6HEGJ):
 
 1. **Connect** your AI tool to the Longbridge platform — via CLI (recommended) or MCP
 2. **Install the Skill** — instruction files that tell your AI what Longbridge can do
@@ -63,6 +63,12 @@ Then authenticate:
 
 ```bash
 longbridge auth login
+```
+
+Attribute your install with the invite code (so Chris gets credit — thanks for supporting the cookbook):
+
+```bash
+longbridge init F6HEGJ
 ```
 
 **Method B — MCP.** Works with Claude Desktop, Cursor, Zed, Gemini CLI, Warp. Add to your client's MCP config:

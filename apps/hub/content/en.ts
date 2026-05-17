@@ -1,7 +1,7 @@
 import type { HubContent, RecipeCard } from "./types";
 
 const SETUP_URL =
-  "https://open.longbridge.com/skill/install.md";
+  "https://open.longbridge.com/skill?invite-code=F6HEGJ";
 const ISSUES_URL =
   "https://github.com/longbridge/developers/issues/new";
 
@@ -523,7 +523,7 @@ const en: HubContent = {
     primary: "Setup guide ↗",
     primaryHref: SETUP_URL,
     secondary: "Official docs ↗",
-    secondaryHref: "https://open.longbridge.com/skill/install.md",
+    secondaryHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
   },
   faq: {
     title: "FAQ",
@@ -565,8 +565,9 @@ const en: HubContent = {
       "Personal project. Views are mine, not my employer's. Not investment advice.",
     links: [
       { label: "X / Twitter", href: "https://x.com/chrisaiquant" },
-      { label: "Substack", href: "https://chrisliang.substack.com" },
-      { label: "GitHub", href: "https://github.com/chrisaiquant" },
+      { label: "Substack", href: "https://chrisaiquant.substack.com" },
+      { label: "WhatsApp", href: "https://wa.me/85266944195" },
+      { label: "GitHub", href: "https://github.com/coolboylcy" },
     ],
   },
 };

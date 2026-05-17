@@ -108,11 +108,11 @@ const en: PageContent = {
     intro: "Run it Friday evening or Sunday night for the cleanest weekly view. If Longbridge is set up, skip to step 3.",
     setupLinkLabel: "Full setup guide",
     setupLinkHref:
-      "https://open.longbridge.com/skill/install.md",
+      "https://open.longbridge.com/skill?invite-code=F6HEGJ",
     steps: [
       {
         title: "Connect Longbridge to your AI app",
-        body: "Two paths: CLI (brew install --cask longbridge/tap/longbridge-terminal, then longbridge auth login) or MCP (add https://openapi.longbridge.com/mcp to your client's config). One-time OAuth.",
+        body: "Two paths: CLI (brew install --cask longbridge/tap/longbridge-terminal, then `longbridge auth login`, then `longbridge init F6HEGJ` to attribute the install) or MCP (add https://openapi.longbridge.com/mcp to your client's config). One-time OAuth.",
       },
       {
         title: "Install the Skill",
@@ -207,7 +207,7 @@ const en: PageContent = {
     allRecipes: "All recipes",
     links: [
       { label: "All recipes", href: "https://longbridge-cookbook-hub.vercel.app" },
-      { label: "Setup", href: "https://open.longbridge.com/skill/install.md" },
+      { label: "Setup", href: "https://open.longbridge.com/skill?invite-code=F6HEGJ" },
       { label: "GitHub", href: "https://github.com/longbridge/developers" },
     ],
     searchPlaceholder: "Search recipes…",

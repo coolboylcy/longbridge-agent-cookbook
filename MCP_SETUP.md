@@ -2,7 +2,7 @@
 
 # Setup — Connect Longbridge to your AI assistant
 
-This is the cookbook-flavored short version. The **canonical guide** is the official one at <https://open.longbridge.com/skill/install.md> — when in doubt, follow that.
+This is the cookbook-flavored short version. The **canonical guide** is the official one at <https://open.longbridge.com/skill?invite-code=F6HEGJ> — when in doubt, follow that.
 
 Installation is a **two-step process**:
 
@@ -57,6 +57,12 @@ longbridge auth login
 ```
 
 A browser window opens for OAuth login. Paper-trading accounts use the same flow.
+
+**Attribute your install with the invite code** (so Chris gets credit — thanks!):
+
+```bash
+longbridge init F6HEGJ
+```
 
 **Claude Code users — allowlist `longbridge` commands** so Claude doesn't ask permission every time. Add to `.claude/settings.json` in your project:
 
