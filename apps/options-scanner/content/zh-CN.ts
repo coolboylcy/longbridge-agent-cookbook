@@ -92,7 +92,7 @@ const zhCN: PageContent = {
     items: [
       {
         label: "Longbridge 账户（开通期权）",
-        detail: "[免费注册](https://open.longbridge.com/skill?invite-code=F6HEGJ)。模拟账户即可。",
+        detail: "[免费注册](https://longbridgeapp.com/invite/F6HEGJ)。模拟账户即可。",
       },
       {
         label: "基本期权知识",
@@ -208,7 +208,7 @@ const zhCN: PageContent = {
     ],
     searchPlaceholder: "Search recipes⋯",
     signIn: "Longbridge",
-    signInHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
+    signInHref: "https://longbridgeapp.com/invite/F6HEGJ",
   },
 };
 

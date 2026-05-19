@@ -92,7 +92,7 @@ const zhHK: PageContent = {
     items: [
       {
         label: "Longbridge 帳戶（開通選擇權）",
-        detail: "[免費註冊](https://open.longbridge.com/skill?invite-code=F6HEGJ)。模擬帳戶即可。",
+        detail: "[免費註冊](https://longbridgeapp.com/invite/F6HEGJ)。模擬帳戶即可。",
       },
       {
         label: "基本選擇權知識",
@@ -210,7 +210,7 @@ const zhHK: PageContent = {
     ],
     searchPlaceholder: "Search recipes⋯",
     signIn: "Longbridge",
-    signInHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
+    signInHref: "https://longbridgeapp.com/invite/F6HEGJ",
   },
 };
 

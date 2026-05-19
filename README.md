@@ -85,7 +85,7 @@ longbridge init F6HEGJ
 
 > Mainland China users: use `https://openapi.longbridge.cn/mcp` for the accelerated endpoint.
 
-On first tool call a browser window opens for OAuth login. Paper-trading accounts use the same flow. [Sign up via Chris's invite link](https://open.longbridge.com/skill?invite-code=F6HEGJ).
+On first tool call a browser window opens for OAuth login. Paper-trading accounts use the same flow. [Sign up via Chris's invite link](https://longbridgeapp.com/invite/F6HEGJ).
 
 ### Step 2 — Install the Skill
 
@@ -209,7 +209,7 @@ Longbridge ships 7 SDKs (Python, Go, Rust, Node, C#, Java, C++). Python is the l
 Technically yes, but the repo is deliberately hostile to that path. If you do, you own every order that fires.
 
 **Q: How do I get a Longbridge account?**
-HK / SG residents: [Sign up via Chris's invite link](https://open.longbridge.com/skill?invite-code=F6HEGJ). For paper trading, after signing up visit [open.longbridge.com](https://open.longbridge.com) — the developer portal auto-provisions a sandbox. MCP uses OAuth 2.1 (no token to copy). The Python SDK fallback still uses `app_key` / `app_secret` / `access_token` from the developer portal.
+HK / SG residents: [Sign up via Chris's invite link](https://longbridgeapp.com/invite/F6HEGJ). For paper trading, after signing up visit [open.longbridge.com](https://open.longbridge.com) — the developer portal auto-provisions a sandbox. MCP uses OAuth 2.1 (no token to copy). The Python SDK fallback still uses `app_key` / `app_secret` / `access_token` from the developer portal.
 
 ---
 

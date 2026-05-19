@@ -93,7 +93,7 @@ const zhCN: PageContent = {
     items: [
       {
         label: "一个 Longbridge 账户",
-        detail: "[免费注册](https://open.longbridge.com/skill?invite-code=F6HEGJ)。模拟交易账户即可 — 不需要真金白银。",
+        detail: "[免费注册](https://longbridgeapp.com/invite/F6HEGJ)。模拟交易账户即可 — 不需要真金白银。",
       },
       {
         label: "一个 AI 对话应用（Claude / Cursor 等）",
@@ -217,7 +217,7 @@ const zhCN: PageContent = {
     ],
     searchPlaceholder: "Search recipes⋯",
     signIn: "Longbridge",
-    signInHref: "https://open.longbridge.com/skill?invite-code=F6HEGJ",
+    signInHref: "https://longbridgeapp.com/invite/F6HEGJ",
   },
 };
 
